@@ -1,13 +1,12 @@
 {
-  "name": "example-create-react-app-express",
+  "name": "sheng-ji",
   "version": "1.0.0",
-  "description": "Example on using create-react-app with a Node Express Backend",
+  "description": "App to play the chinese card game Sheng-Ji",
   "author": {
-    "name": "Esau Silva",
-    "email": "esausilva85@gmail.com",
-    "url": "https://esausilva.com"
+    "name": "Jason Kim",
+    "email": "minjaekim47@gmail.com"
   },
-  "license": "MIT",
+  "license": "Apache-2.0",
   "scripts": {
     "client": "cd client && yarn start",
     "server": "nodemon server.js",
@@ -25,14 +24,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/esausilva/example-create-react-app-express.git"
-  },
-  "bugs": {
-    "url": "https://github.com/esausilva/example-create-react-app-express/issues"
-  },
-  "keywords": [
-    "node",
-    "express",
-    "create-react-app"
-  ]
+    "url": "https://github.com/Jasonmk47/Sheng-ji-3.0.git"
+  }
 }
