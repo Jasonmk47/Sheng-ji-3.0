@@ -38,4 +38,15 @@ class App extends PureComponent {
   }
 }
 
-export default App;
+const mapStateToProps = state => {
+  return;
+};
+
+const mapDispatchToProps = dispatch => {
+  return;
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(App);
