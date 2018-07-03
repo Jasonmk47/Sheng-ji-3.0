@@ -27,5 +27,9 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/Jasonmk47/Sheng-ji-3.0.git"
+  },
+  "prettier": {
+    "singleQuote": true,
+    "trailingComma": "all"
   }
 }
