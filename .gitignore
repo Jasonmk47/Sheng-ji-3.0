@@ -36,7 +36,8 @@
 ehthumbs.db
 Thumbs.db
 
-# foldders we don't need #
+# stuff we don't need #
 node_modules/
 build/
 .vscode/
+yarn.lock

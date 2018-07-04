@@ -1,3 +1,4 @@
+/* This is only for app global settings. For component specific styles, use glamour */
 .App {
   text-align: center;
 }
@@ -23,6 +24,10 @@
 }
 
 @keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }

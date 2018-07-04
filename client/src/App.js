@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import logo from './logo.svg';
 
-import './App.css';
+import './styles/App.css';
 
 class App extends PureComponent {
   state = {
