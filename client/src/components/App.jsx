@@ -1,9 +1,9 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 
-import logo from './logo.svg';
+import logo from '../logo.svg';
 
-import './styles/App.css';
+import '../styles/App.css';
 
 class App extends PureComponent {
   state = {

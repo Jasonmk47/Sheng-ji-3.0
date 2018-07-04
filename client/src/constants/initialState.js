@@ -1,3 +1,8 @@
+const Account = {};
+
+const Game = {};
+
 export const initialState = {
-  testState: 'hi',
+  account: Account,
+  game: Game,
 };
