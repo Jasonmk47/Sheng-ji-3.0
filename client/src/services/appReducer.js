@@ -1,9 +1,8 @@
 import actions from '../constants/appActions';
 import * as initialState from '../constants/initialState';
-import { combineReducers } from 'redux';
 
 // Reminder to never mutate state, only return a new state object
-export const appReducer = (state = initialState, action) => {
+export const gameReducer = (state = initialState, action) => {
   switch (action.type) {
     case actions.EXAMPLE:
       return Object.assign({}, state, { testState: action.testParameter });
@@ -12,6 +11,12 @@ export const appReducer = (state = initialState, action) => {
   }
 };
 
-const reducer = combineReducers({ appReducer });
-
-export default reducer;
+//This could be split into a different reducer but whatever, it's not important rn
+export const accountReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case actions.EXAMPLE:
+      return Object.assign({}, state, { testState: action.testParameter });
+    default:
+      return state;
+  }
+};
