@@ -39,11 +39,11 @@ class App extends PureComponent {
 }
 
 const mapStateToProps = state => {
-  return;
+  return {};
 };
 
 const mapDispatchToProps = dispatch => {
-  return;
+  return {};
 };
 
 export default connect(
