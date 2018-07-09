@@ -1,4 +1,4 @@
-import suits from '../constants/enums';
+import { suits } from '../constants/enums';
 import cardToPictureDict from '../constants/cardToPicture';
 
 export const getSuitIdFromCardId = cardId => {
@@ -15,7 +15,7 @@ export const getPictureUrlFromCardId = cardId => {
   validateCardId(cardId);
   return cardToPictureDict[cardId % 54];
 };
-
+w;
 export const getIsTrumpFromCardId = (cardId, gameState) => {
   validateCardId(cardId);
   const suit = getSuitIdFromCardId(cardId);

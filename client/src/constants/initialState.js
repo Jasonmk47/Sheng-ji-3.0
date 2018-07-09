@@ -1,4 +1,4 @@
-import suits from './enums.js';
+import { suits } from './enums.js';
 
 const Account = {};
 
