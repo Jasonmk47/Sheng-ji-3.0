@@ -15,7 +15,7 @@ export const getPictureUrlFromCardId = cardId => {
   validateCardId(cardId);
   return cardToPictureDict[cardId % 54];
 };
-w;
+
 export const getIsTrumpFromCardId = (cardId, gameState) => {
   validateCardId(cardId);
   const suit = getSuitIdFromCardId(cardId);
