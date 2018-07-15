@@ -1,14 +1,16 @@
 import { suits } from './enums.js';
 
-const Account = {};
+export const Account = {
+  userId: null,
+};
 
 //These fields will have to be initialized on game load
-const Game = {
+export const Game = {
   currentGameId: -1,
   // Cards selected will be handled in component state
   display: {
-    cardsVisible: [],
-    cardsInHand: [],
+    cardIdsVisible: [],
+    cardIdsInHand: [1, 2, 3],
   },
   boardState: {
     trumpSuit: suits.jokers,
@@ -17,9 +19,4 @@ const Game = {
     teamPoints: 0,
     currentPlayerId: -1,
   },
-};
-
-export const initialState = {
-  account: Account,
-  game: Game,
 };

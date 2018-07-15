@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import App from './App';
-import GameBoard from './GameBoard';
+import GameBoard from './GameBoard/GameBoard';
 
 class Root extends React.PureComponent {
   render() {

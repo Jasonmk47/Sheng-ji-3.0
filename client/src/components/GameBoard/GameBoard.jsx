@@ -1,9 +1,16 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 
+import Hand from './Hand';
+
 class GameBoard extends PureComponent {
   render() {
-    return <div className="GameBoard"> Test Board</div>;
+    return (
+      <div className="game-board">
+        Game Board
+        <Hand />
+      </div>
+    );
   }
 }
 
