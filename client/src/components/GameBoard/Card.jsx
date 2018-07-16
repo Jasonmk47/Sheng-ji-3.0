@@ -1,5 +1,4 @@
 import React, { PureComponent } from 'react';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { css } from 'glamor';
 
@@ -19,24 +18,13 @@ class Card extends PureComponent {
   }
 }
 
-const mapStateToProps = state => {
-  return {};
-};
-
-const mapDispatchToProps = dispatch => {
-  return {};
-};
-
 Card.propTypes = {
   cardId: PropTypes.number.isRequired,
 };
 
 const cardStyle = css({
-  width: '20%',
-  marginRight: '-15%',
+  width: '10%',
+  marginRight: '-8%',
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(Card);
+export default Card;
