@@ -1,5 +1,7 @@
 const accountAction = {
-  account_EXAMPLE_ACTION: 'account_EXAMPLE_ACTION',
+  account_LOGIN: 'account_LOGIN',
+  account_LOGOUT: 'account_LOGOUT',
+  account_REGISTER: 'account_REGISTER',
 };
 
 export default accountAction;
