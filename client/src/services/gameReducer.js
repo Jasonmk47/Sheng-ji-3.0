@@ -5,6 +5,7 @@ import { Game } from '../constants/initialState';
 export const gameReducer = (state = Game, action) => {
   switch (action.type) {
     case actions.game_SUBMIT_PLAY:
+      const cardIds =  action.cardIds;
       return Object.assign({}, state, { testState: actions.testParameter });
     case actions.game_CALL_SUIT:
       return state;
