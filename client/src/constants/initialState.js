@@ -1,4 +1,4 @@
-import { suits } from './enums.js';
+import { suitTypes } from './enums.js';
 
 export const Account = {
   userId: null,
@@ -13,7 +13,7 @@ export const Game = {
     cardIdsInHand: [1, 2, 3],
   },
   boardState: {
-    trumpSuit: suits.jokers,
+    trumpSuit: suitTypes.jokers,
     trumpNumber: -1,
     selfPoints: 0,
     teamPoints: 0,
