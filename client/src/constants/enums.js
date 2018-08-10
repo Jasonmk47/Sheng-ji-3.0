@@ -10,7 +10,5 @@ export const playTypes = {
   single: 0,
   pair: 1,
   consecutivePair: 2,
-  tripleConsecutivePair: 3,
-  schuai: 4,
-  largerConsecutivePair: 5,
+  schuai: 3,
 };

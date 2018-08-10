@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { ApolloProvider } from 'react-apollo';
 
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
@@ -9,8 +10,9 @@ import GameBoard from './GameBoard/GameBoard';
 
 class Root extends React.PureComponent {
   render() {
-    const { store } = this.props;
+    const { store, apolloClient } = this.props;
     return (
+      <ApolloProvider client={apolloClient}>
       <Provider store={store}>
         <Router>
           <Switch>
@@ -19,10 +21,11 @@ class Root extends React.PureComponent {
           </Switch>
         </Router>
       </Provider>
+      </ApolloProvider>
     );
   }
 }
 
-Root.propTypes = { store: PropTypes.object };
+Root.propTypes = { store: PropTypes.object, apolloClient: PropTypes.object };
 
 export default Root;
