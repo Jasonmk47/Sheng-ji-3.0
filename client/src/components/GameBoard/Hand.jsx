@@ -1,37 +1,37 @@
 import React, { PureComponent } from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
 
 import Card from './Card';
+import { Query } from "react-apollo";
+import gql from "graphql-tag";
+
+const GET_CARD_IDS_IN_HAND = gql`
+  query {
+      Game @client {
+        display {
+          cardIdsInHand
+        }
+      }
+    }
+`;
 
 class Hand extends PureComponent {
   render() {
-    const { cardIdsInHand } = this.props;
     return (
-      <div className="my-hand">
-        {cardIdsInHand.map(cardId => {
-          return <Card key={`card_${cardId}`} cardId={cardId} />;
-        })}
-      </div>
+      <div className={'my-hand'}>
+      <Query query={GET_CARD_IDS_IN_HAND}>
+        {({ loading, error, data }) => {
+          if (loading) return null;
+          if (error) return `Error with card retrieval!: ${error}`;
+          return (
+            data.Game.display.cardIdsInHand.map(cardId => {
+              return <Card key={`card_${cardId}`} cardId={cardId} />;
+            })
+          );
+        }}
+      </Query>
+      </ div>
     );
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    cardIdsInHand: state.game.display.cardIdsInHand,
-  };
-};
-
-const mapDispatchToProps = dispatch => {
-  return {};
-};
-
-Hand.propTypes = {
-  cardIdsInHand: PropTypes.array.isRequired,
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(Hand);
+export default Hand;
