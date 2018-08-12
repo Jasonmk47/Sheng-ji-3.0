@@ -69,6 +69,44 @@ export const getPlayTypeFromCardIds = cardIds => {
   }
 };
 
+export const evaluateWinner = (hands, playType) => {
+  hands.forEach(playerId => 
+    hands[playerId].forEach(cardId => validateCardId(cardId)));
+
+  /* 
+   * hands schema expected (can be changed) (assumed in order of play?):
+   * {
+   *    playerID1: [cardId1, cardId2],
+   *    playerID2: [cardId1, cardId2], 
+   *    playerID3: [cardId1, cardId2],
+   *    playerID4: [cardId1, cardId2],
+   * } 
+   */
+
+  // lay out steps for rules 
+  // 1: select hands with all trumps    
+  // 2: remove hands with any out-of-suit
+  // 3: find winner among trumps, else
+  // 4: find winner among starting suit
+  
+
+  switch(playType) {
+    case playTypes.single:
+      
+
+      /* comparator if all are within same suit */
+      return Object.keys(hands).reduce((a, b) => hands[a] > hands[b] ? a : b); 
+    case playTypes.pair:
+      return Object.keys(hands).reduce((a, b) => hands[a][0] > hands[b][0] ? a : b);
+    case playTypes.consecutivePair:
+      break;
+    case playTypes.schuai:
+      break;
+    default:
+      throw new Error(`Invalid playtype: ${playType}`)
+  }
+}
+
 const checkCardsEqual = (cardId1, cardId2) => {
   return cardId1 % 54 === cardId2 % 54;
 };
