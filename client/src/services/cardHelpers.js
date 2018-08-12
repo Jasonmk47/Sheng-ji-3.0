@@ -30,6 +30,11 @@ export const getIsTrumpFromCardId = (cardId, gameState) => {
   else return false;
 };
 
+export const getIsInSuitFromCardId = (cardId, gameState) => {
+  validateCardId(cardId);
+  return (getSuitIdFromCardId(cardId) === gameState.boardState.startingSuit);
+};
+
 export const getPlayTypeFromCardIds = cardIds => {
   cardIds.forEach(cardId => validateCardId(cardId));
   const sortedCardIds = cardIds.sort((a, b) => a - b);
@@ -37,16 +42,17 @@ export const getPlayTypeFromCardIds = cardIds => {
 
   /*
    * One card must be single
-   * Two cards must be paired else schuai
+   * Two cards must be paired else shuai
    * Even numered hands could be consecutive pairs
    * Odd numbered hands must be schaui
   */
+
   if (numCards === 1) {
     return playTypes.single;
   } else if (numCards === 2) {
     return checkCardsEqual(sortedCardIds[0], sortedCardIds[1])
       ? playTypes.pair
-      : playTypes.schuai;
+      : playTypes.shuai;
   } else if (numCards % 2 === 0) {
     let prevValue = -1;
     for (let i = 0; i < numCards; i += 2) {
@@ -59,7 +65,7 @@ export const getPlayTypeFromCardIds = cardIds => {
                 getSuitIdFromCardId(prevValue)))
         )
       ) {
-        return playTypes.schuai;
+        return playTypes.shuai;
       }
       prevValue = sortedCardIds[i];
     }
@@ -69,42 +75,73 @@ export const getPlayTypeFromCardIds = cardIds => {
   }
 };
 
-export const evaluateWinner = (hands, playType) => {
-  hands.forEach(playerId => 
-    hands[playerId].forEach(cardId => validateCardId(cardId)));
-
-  /* 
-   * hands schema expected (can be changed) (assumed in order of play?):
-   * {
-   *    playerID1: [cardId1, cardId2],
-   *    playerID2: [cardId1, cardId2], 
-   *    playerID3: [cardId1, cardId2],
-   *    playerID4: [cardId1, cardId2],
-   * } 
-   */
-
-  // lay out steps for rules 
-  // 1: select hands with all trumps    
-  // 2: remove hands with any out-of-suit
-  // 3: find winner among trumps, else
-  // 4: find winner among starting suit
+export const getHigherHand = (hand1, hand2, playTypes, gameState) => {
   
-
+  // NOTE: for cards that would not win anyways (e.g., out of suit pairs vs in-suit non-pairs)
+  //       the comparator chooses one as a winner, assumed will be beaten by the starting hand 
+  
   switch(playType) {
     case playTypes.single:
       
+      // If only one person played trump
+      if (getIsTrumpFromCardId(hand1[0], gameState) && !getIsTrumpFromCardId(hand2[0], gameState)) return true;
+      if (!getIsTrumpFromCardId(hand1[0], gameState) && getIsTrumpFromCardId(hand2[0], gameState)) return false;
 
-      /* comparator if all are within same suit */
-      return Object.keys(hands).reduce((a, b) => hands[a] > hands[b] ? a : b); 
+      // If only one person played in suit
+      if (getIsInSuitFromCardId(hand1[0], gameState) && !getIsInSuitFromCardId(hand2[0], gameState)) return true;
+      if (!getIsInSuitFromCardId(hand1[0], gameState) && getIsInSuitFromCardId(hand2[0], gameState)) return false;
+
+      // Otherwise compare cards
+      return getHigherCard(hand1[0], hand2[0]);
+
+
     case playTypes.pair:
-      return Object.keys(hands).reduce((a, b) => hands[a][0] > hands[b][0] ? a : b);
+      if (isPair(hand1) && !isPair(hand2)) return true;
+      if (!isPair(hand1) && isPair(hand2)) return false;
+
+      if (isPair(hand1) && isPair(hand2)) {
+        return true; // TONY NEEDED TO GET DINNER WITH JOE AND WILL FINISH THIS LATER
+
+      } 
+      else return true; // order of losing hands unimportant
+
+
+      // are both pairs?
+      //  check trumps
+      //  check out-of-suit
+      //  compare cards
+      // else if not pairs
+      //  else true
+    
+
     case playTypes.consecutivePair:
-      break;
-    case playTypes.schuai:
+      // are both consec pairs?
+      //  check trumps
+      //  check out-of-suit
+      //  compare cards
+      // else if not pairs
+      //  else true
+    
+
+    case playTypes.shuai:
+      throw new Error(`Shuai not supported yet!`)
       break;
     default:
       throw new Error(`Invalid playtype: ${playType}`)
   }
+}
+
+const isPair = (hand) => {
+  if (typeof hand == "undefined") throw new Error(`Hand is undefined; cannot check for pairs`);
+  if (hand.length != 2) return false;
+  if (hand[0] == hand[1]) throw new Error(`Cannot have same cardId: ${hand[0]}`);
+  hand.forEach((cardId) => validateCardId(cardId))
+  
+  return hand[0] = hand[1]
+}
+
+const getHigherCard = (cardId1, cardId2) => { 
+  return cardId1 % 54 > cardId2 % 54; // NOT RIGHT; stub function
 }
 
 const checkCardsEqual = (cardId1, cardId2) => {
