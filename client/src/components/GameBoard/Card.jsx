@@ -5,6 +5,9 @@ import { css } from 'glamor';
 import * as cardHelpers from '../../services/cardHelpers';
 
 class Card extends PureComponent {
+  state = { 
+    isSelected: false
+  };
   render() {
     const { cardId } = this.props;
 

@@ -37,6 +37,7 @@ ehthumbs.db
 Thumbs.db
 
 # stuff we don't need #
+.env
 node_modules/
 build/
 .vscode/
