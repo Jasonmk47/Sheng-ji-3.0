@@ -75,7 +75,7 @@ export const getPlayTypeFromCardIds = cardIds => {
   }
 };
 
-export const getHigherHand = (hand1, hand2, playTypes, gameState) => {
+export const getHigherHand = (hand1, hand2, playType, gameState) => {
   
   // NOTE: for cards that would not win anyways (e.g., out of suit pairs vs in-suit non-pairs)
   //       the comparator chooses one as a winner, assumed will be beaten by the starting hand 
@@ -112,7 +112,6 @@ export const getHigherHand = (hand1, hand2, playTypes, gameState) => {
       //  compare cards
       // else if not pairs
       //  else true
-    
 
     case playTypes.consecutivePair:
       // are both consec pairs?
@@ -121,20 +120,19 @@ export const getHigherHand = (hand1, hand2, playTypes, gameState) => {
       //  compare cards
       // else if not pairs
       //  else true
-    
+      break;
 
     case playTypes.shuai:
       throw new Error(`Shuai not supported yet!`)
-      break;
     default:
       throw new Error(`Invalid playtype: ${playType}`)
   }
 }
 
 const isPair = (hand) => {
-  if (typeof hand == "undefined") throw new Error(`Hand is undefined; cannot check for pairs`);
-  if (hand.length != 2) return false;
-  if (hand[0] == hand[1]) throw new Error(`Cannot have same cardId: ${hand[0]}`);
+  if (typeof hand === "undefined") throw new Error(`Hand is undefined; cannot check for pairs`);
+  if (hand.length !== 2) return false;
+  if (hand[0] === hand[1]) throw new Error(`Cannot have same cardId: ${hand[0]}`);
   hand.forEach((cardId) => validateCardId(cardId))
   
   return hand[0] = hand[1]
