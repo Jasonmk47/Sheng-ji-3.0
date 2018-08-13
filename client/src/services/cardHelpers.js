@@ -12,6 +12,15 @@ export const getSuitIdFromCardId = cardId => {
   else return suitTypes.jokers;
 };
 
+export const getNumberFromCardId = cardId => {
+  if (getSuitIdFromCardId(cardId) === suitTypes.jokers)
+    return cardId % 54; // 52, 53
+  else if (cardId % 13 === 1)
+    return 14; //force ace to be higher
+  else
+    return cardId % 13; // return card numbers
+};
+
 export const getPictureUrlFromCardId = cardId => {
   validateCardId(cardId);
   return cardIdToPictureDict[cardId % 54];
@@ -71,76 +80,43 @@ export const getPlayTypeFromCardIds = cardIds => {
     }
     return playTypes.consecutivePair;
   } else {
-    return playTypes.schaui;
+    return playTypes.shaui;
   }
 };
 
-export const getHigherHand = (hand1, hand2, playType, gameState) => {
-  
-  // NOTE: for cards that would not win anyways (e.g., out of suit pairs vs in-suit non-pairs)
-  //       the comparator chooses one as a winner, assumed will be beaten by the starting hand 
-  
-  switch(playType) {
-    case playTypes.single:
-      
-      // If only one person played trump
-      if (getIsTrumpFromCardId(hand1[0], gameState) && !getIsTrumpFromCardId(hand2[0], gameState)) return true;
-      if (!getIsTrumpFromCardId(hand1[0], gameState) && getIsTrumpFromCardId(hand2[0], gameState)) return false;
 
-      // If only one person played in suit
-      if (getIsInSuitFromCardId(hand1[0], gameState) && !getIsInSuitFromCardId(hand2[0], gameState)) return true;
-      if (!getIsInSuitFromCardId(hand1[0], gameState) && getIsInSuitFromCardId(hand2[0], gameState)) return false;
-
-      // Otherwise compare cards
-      return getHigherCard(hand1[0], hand2[0]);
-
-
-    case playTypes.pair:
-      if (isPair(hand1) && !isPair(hand2)) return true;
-      if (!isPair(hand1) && isPair(hand2)) return false;
-
-      if (isPair(hand1) && isPair(hand2)) {
-        return true; // TONY NEEDED TO GET DINNER WITH JOE AND WILL FINISH THIS LATER
-
-      } 
-      else return true; // order of losing hands unimportant
-
-
-      // are both pairs?
-      //  check trumps
-      //  check out-of-suit
-      //  compare cards
-      // else if not pairs
-      //  else true
-
-    case playTypes.consecutivePair:
-      // are both consec pairs?
-      //  check trumps
-      //  check out-of-suit
-      //  compare cards
-      // else if not pairs
-      //  else true
-      break;
-
-    case playTypes.shuai:
-      throw new Error(`Shuai not supported yet!`)
-    default:
-      throw new Error(`Invalid playtype: ${playType}`)
-  }
-}
-
-const isPair = (hand) => {
+export const isPair = (hand) => {
   if (typeof hand === "undefined") throw new Error(`Hand is undefined; cannot check for pairs`);
   if (hand.length !== 2) return false;
   if (hand[0] === hand[1]) throw new Error(`Cannot have same cardId: ${hand[0]}`);
   hand.forEach((cardId) => validateCardId(cardId))
   
   return hand[0] = hand[1]
+};
+
+export const isConsecutivePair = (sortedHand) => {
+  const suit = getSuitIdFromCardId(sortedHand[0]);
+
+  // NEED TO CAPTURE EDGE CASES (e.g., jokers, skipping trump number)
+  return (sortedHand.every((cardId) => getSuitIdFromCardId(cardId) === suit)) &&           // same suit
+        (isPair([sortedHand[0], sortedHand[2]])) &&    // lower pair
+        (isPair([sortedHand[1], sortedHand[3]]))  &&    // higher pair
+        (getNumberFromCardId(sortedHand[1]) - getNumberFromCardId(sortedHand[0]) === 1);  // consecutive
 }
 
-const getHigherCard = (cardId1, cardId2) => { 
-  return cardId1 % 54 > cardId2 % 54; // NOT RIGHT; stub function
-}
+export const getHigherCard = (cardId1, cardId2, gameState) => { 
+  
+  // If only one person played trump
+  if (getIsTrumpFromCardId(cardId1, gameState) && !getIsTrumpFromCardId(cardId2, gameState)) return true;
+  if (!getIsTrumpFromCardId(cardId1, gameState) && getIsTrumpFromCardId(cardId2, gameState)) return false;
+
+  // If only one person played in suit
+  if (getIsInSuitFromCardId(cardId1, gameState) && !getIsInSuitFromCardId(cardId2, gameState)) return true;
+  if (!getIsInSuitFromCardId(cardId1, gameState) && getIsInSuitFromCardId(cardId2, gameState)) return false;
+
+  // Otherwise compare cards  
+  return getNumberFromCardId(cardId1) >= getNumberFromCardId(cardId2); 
+};
 
 const checkCardsEqual = (cardId1, cardId2) => {
   return cardId1 % 54 === cardId2 % 54;
