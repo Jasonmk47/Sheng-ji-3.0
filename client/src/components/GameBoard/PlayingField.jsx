@@ -1,6 +1,4 @@
 import React, { PureComponent } from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
 
 import Card from './Card';
 
@@ -27,21 +25,4 @@ class PlayingField extends PureComponent {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    cardsOnField: state.game.display.cardIdsVisible,
-  };
-};
-
-const mapDispatchToProps = dispatch => {
-  return {};
-};
-
-PlayingField.propTypes = {
-  cardsOnField: PropTypes.array.isRequired,
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(PlayingField);
+export default PlayingField;
