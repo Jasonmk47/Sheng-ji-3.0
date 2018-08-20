@@ -1,6 +1,8 @@
 // Generated with the generateCardMappings.py script
 // If you have more decks, just mod 54 to figure out which to use
+// -1 is for a card back
 export const cardIdToPictureDict = {
+  '-1': require('./cards/bicycle_back.png'),
   0: require('./cards/2_of_clubs.png'),
   1: require('./cards/3_of_clubs.png'),
   2: require('./cards/4_of_clubs.png'),

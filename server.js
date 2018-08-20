@@ -13,6 +13,8 @@ const app = express();
 const port = process.env.PORT || 5000;
 const dev = process.env.NODE_ENV === 'development';
 
+console.log(typeDefs);
+
 // GraphQL
 app.use(
   '/graphql',

@@ -13,12 +13,11 @@ export const getSuitIdFromCardId = cardId => {
 };
 
 export const getNumberFromCardId = cardId => {
-  if (getSuitIdFromCardId(cardId) === suitTypes.jokers)
-    return cardId % 54; // 52, 53
-  else if (cardId % 13 === 1)
-    return 14; //force ace to be higher
-  else
-    return cardId % 13; // return card numbers
+  if (getSuitIdFromCardId(cardId) === suitTypes.jokers) return cardId % 54;
+  // 52, 53
+  else if (cardId % 13 === 1) return 14;
+  //force ace to be higher
+  else return cardId % 13; // return card numbers
 };
 
 export const getPictureUrlFromCardId = cardId => {
@@ -41,7 +40,7 @@ export const getIsTrumpFromCardId = (cardId, gameState) => {
 
 export const getIsInSuitFromCardId = (cardId, gameState) => {
   validateCardId(cardId);
-  return (getSuitIdFromCardId(cardId) === gameState.boardState.startingSuit);
+  return getSuitIdFromCardId(cardId) === gameState.boardState.startingSuit;
 };
 
 export const getPlayTypeFromCardIds = cardIds => {
@@ -84,44 +83,65 @@ export const getPlayTypeFromCardIds = cardIds => {
   }
 };
 
-
-export const isPair = (hand) => {
-  if (typeof hand === "undefined") throw new Error(`Hand is undefined; cannot check for pairs`);
+export const isPair = hand => {
+  if (typeof hand === 'undefined')
+    throw new Error(`Hand is undefined; cannot check for pairs`);
   if (hand.length !== 2) return false;
-  if (hand[0] === hand[1]) throw new Error(`Cannot have same cardId: ${hand[0]}`);
-  hand.forEach((cardId) => validateCardId(cardId))
-  
-  return hand[0] = hand[1]
+  if (hand[0] === hand[1])
+    throw new Error(`Cannot have same cardId: ${hand[0]}`);
+  hand.forEach(cardId => validateCardId(cardId));
+
+  return (hand[0] = hand[1]);
 };
 
-export const isConsecutivePair = (sortedHand) => {
+export const isConsecutivePair = sortedHand => {
   const suit = getSuitIdFromCardId(sortedHand[0]);
 
   // NEED TO CAPTURE EDGE CASES (e.g., jokers, skipping trump number)
-  return (sortedHand.every((cardId) => getSuitIdFromCardId(cardId) === suit)) &&           // same suit
-        (isPair([sortedHand[0], sortedHand[2]])) &&    // lower pair
-        (isPair([sortedHand[1], sortedHand[3]]))  &&    // higher pair
-        (getNumberFromCardId(sortedHand[1]) - getNumberFromCardId(sortedHand[0]) === 1);  // consecutive
-}
+  return (
+    sortedHand.every(cardId => getSuitIdFromCardId(cardId) === suit) && // same suit
+    isPair([sortedHand[0], sortedHand[2]]) && // lower pair
+    isPair([sortedHand[1], sortedHand[3]]) && // higher pair
+    getNumberFromCardId(sortedHand[1]) - getNumberFromCardId(sortedHand[0]) ===
+      1
+  ); // consecutive
+};
 
-export const getHigherCard = (cardId1, cardId2, gameState) => { 
-  
+export const getHigherCard = (cardId1, cardId2, gameState) => {
   // If only one person played trump
-  if (getIsTrumpFromCardId(cardId1, gameState) && !getIsTrumpFromCardId(cardId2, gameState)) return true;
-  if (!getIsTrumpFromCardId(cardId1, gameState) && getIsTrumpFromCardId(cardId2, gameState)) return false;
+  if (
+    getIsTrumpFromCardId(cardId1, gameState) &&
+    !getIsTrumpFromCardId(cardId2, gameState)
+  )
+    return true;
+  if (
+    !getIsTrumpFromCardId(cardId1, gameState) &&
+    getIsTrumpFromCardId(cardId2, gameState)
+  )
+    return false;
 
   // If only one person played in suit
-  if (getIsInSuitFromCardId(cardId1, gameState) && !getIsInSuitFromCardId(cardId2, gameState)) return true;
-  if (!getIsInSuitFromCardId(cardId1, gameState) && getIsInSuitFromCardId(cardId2, gameState)) return false;
+  if (
+    getIsInSuitFromCardId(cardId1, gameState) &&
+    !getIsInSuitFromCardId(cardId2, gameState)
+  )
+    return true;
+  if (
+    !getIsInSuitFromCardId(cardId1, gameState) &&
+    getIsInSuitFromCardId(cardId2, gameState)
+  )
+    return false;
 
-  // Otherwise compare cards  
-  return getNumberFromCardId(cardId1) >= getNumberFromCardId(cardId2); 
+  // Otherwise compare cards
+  return getNumberFromCardId(cardId1) >= getNumberFromCardId(cardId2);
 };
 
 const checkCardsEqual = (cardId1, cardId2) => {
   return cardId1 % 54 === cardId2 % 54;
 };
 
+// -1 is for a card back
+// % is the remainder operation in js not mod so this works
 const validateCardId = cardId => {
-  if (cardId < 0) throw new Error(`CardId was negative: ${cardId}`);
+  if (cardId < -1) throw new Error('CardId was negative: ' + cardId);
 };

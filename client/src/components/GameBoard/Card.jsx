@@ -15,7 +15,7 @@ class Card extends PureComponent {
       <img
         className={`card=${cardId} ` + cardStyle.toString()}
         src={cardHelpers.getPictureUrlFromCardId(cardId)}
-        alt={`${cardHelpers.getCardNameFromCardId(cardId)}`}
+        alt={cardHelpers.getCardNameFromCardId(cardId)}
       />
     );
   }
@@ -27,7 +27,6 @@ Card.propTypes = {
 
 const cardStyle = css({
   width: '10%',
-  marginRight: '-8%',
 });
 
 export default Card;

@@ -1,42 +1,40 @@
 #Declaring here and copying over to schema.js becuase in string form it needs to be escaped in ES5...
 type User {
-    id: ID!
-    username: String!
+  id: ID!
+  username: String!
 }
 
 type Match {
-    id: ID!
-    isActive: Boolean!
-    userIds: [ID]
+  id: ID!
+  isActive: Boolean!
+  userIds: [ID]
 }
 
 type Game {
-    id: ID!
-    matchId: Int!
-    isActive: Boolean!
-    trumpSuit: Int
-    trumpNumber: Int
-    startingUserId: ID
+  id: ID!
+  matchId: Int!
+  isActive: Boolean!
+  trumpSuit: Int
+  trumpNumber: Int
+  startingUserId: ID
 }
 
 type Tricks {
-    id: Int!
-    gameId: Int!
-    startingUserId: ID!
-    winningUserId: ID
-    playedCardIds: [Int]
+  id: Int!
+  gameId: Int!
+  startingUserId: ID!
+  winningUserId: ID
+  playedCardIds: [Int]
 }
 
 # the schema allows the following query:
 type Query {
-  posts: [Post]
+  games: [Game]
 }
 
 # this schema allows the following mutation:
 type Mutation {
-  upvotePost (
-    postId: ID!
-  ): Post
+  playCard(cardId: Int!): Game
 }
 
 schema {

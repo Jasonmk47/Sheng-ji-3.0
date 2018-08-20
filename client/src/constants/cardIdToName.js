@@ -2,6 +2,7 @@
 // Changed joker names manually
 // If you have more decks, just mod 54 to figure out which to use
 export const cardIdToCardNameDict = {
+  '-1': 'card back',
   0: '2 of clubs',
   1: '3 of clubs',
   2: '4 of clubs',
