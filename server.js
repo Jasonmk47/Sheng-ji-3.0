@@ -3,32 +3,22 @@ require('dotenv').config({ path: __dirname + '/.env' });
 
 const express = require('express');
 const path = require('path');
-var graphqlHTTP = require('express-graphql');
+const graphqlHTTP = require('express-graphql');
 const { buildSchema } = require('graphql');
+const { typeDefs, resolver } = require('./graphql');
 const { Client } = require('pg');
 
-// GraphQL schema
-var schema = buildSchema(`
-  type Query {
-    hello: String
-  }
-`);
-// Root resolver
-var root = {
-  hello: () => {
-    return 'Hello World';
-  },
-};
-
+// Express
 const app = express();
 const port = process.env.PORT || 5000;
 const dev = process.env.NODE_ENV === 'development';
 
+// GraphQL
 app.use(
   '/graphql',
   graphqlHTTP({
-    schema: schema,
-    rootValue: root,
+    schema: buildSchema(typeDefs),
+    rootValue: resolver,
     graphiql: dev,
   }),
 );
