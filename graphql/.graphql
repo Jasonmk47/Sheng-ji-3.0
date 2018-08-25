@@ -2,12 +2,14 @@
 type User {
   id: ID!
   username: String!
+  activeMatchIds: [Int!]
 }
 
 type Match {
   id: ID!
   isActive: Boolean!
-  userIds: [ID]
+  userIds: [ID!]!
+  gameIds: [Int!]!
 }
 
 type Game {
@@ -17,24 +19,24 @@ type Game {
   trumpSuit: Int
   trumpNumber: Int
   startingUserId: ID
+  tricks: [Tricks]!
 }
 
 type Tricks {
   id: Int!
-  gameId: Int!
   startingUserId: ID!
   winningUserId: ID
-  playedCardIds: [Int]
+  playedCardIds: [Int!]!
 }
 
 # the schema allows the following query:
 type Query {
-  games: [Game]
+  game(gameId: Int!): Game
 }
 
 # this schema allows the following mutation:
 type Mutation {
-  playCard(cardId: Int!): Game
+  playCard(cardId: Int!, gameId: Int!): Game
 }
 
 schema {

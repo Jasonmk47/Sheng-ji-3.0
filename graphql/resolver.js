@@ -1,6 +1,6 @@
 const root = {
-  hello: () => {
-    return 'Hello World';
+  game: gameId => {
+    return;
   },
 };
 
