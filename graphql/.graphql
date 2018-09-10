@@ -1,19 +1,19 @@
 #Declaring here and copying over to schema.js becuase in string form it needs to be escaped in ES5...
 type User {
-  id: ID!
+  userIdd: ID!
   username: String!
   activeMatchIds: [Int!]
 }
 
 type Match {
-  id: ID!
+  matchId: ID!
   isActive: Boolean!
   userIds: [ID!]!
   gameIds: [Int!]!
 }
 
 type Game {
-  id: ID!
+  gameId: ID!
   matchId: Int!
   isActive: Boolean!
   trumpSuit: Int
@@ -23,7 +23,7 @@ type Game {
 }
 
 type Tricks {
-  id: Int!
+  trickId: Int!
   startingUserId: ID!
   winningUserId: ID
   playedCardIds: [Int!]!
@@ -31,7 +31,8 @@ type Tricks {
 
 # the schema allows the following query:
 type Query {
-  game(gameId: Int!): Game
+  game(gameId: Int!): Game,
+  user(userId: Int!): User,
 }
 
 # this schema allows the following mutation:
