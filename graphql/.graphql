@@ -1,6 +1,6 @@
 #Declaring here and copying over to schema.js becuase in string form it needs to be escaped in ES5...
 type User {
-  userIdd: ID!
+  userId: ID!
   username: String!
   activeMatchIds: [Int!]
 }

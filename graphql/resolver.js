@@ -1,10 +1,10 @@
 const resolverMap = {
-  user: (args, context) => {
-    return context
+  user: async (args, context) => {
+    return await context
       .one("SELECT * FROM account.users WHERE userId = '" + args.userId + "';")
       .then(data => {
         return {
-          userId: data.userId,
+          userId: data.userid,
           username: data.username,
           activeMatchIds: [1],
         };
