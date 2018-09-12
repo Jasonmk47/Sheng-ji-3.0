@@ -22,8 +22,10 @@
     "express-graphql": "^0.6.12",
     "glamor": "^2.20.40",
     "graphql": "^0.13.2",
+    "lodash": "^4.17.10",
     "nodemon": "^1.17.5",
     "pg": "^7.4.3",
+    "pg-promise": "^8.4.6",
     "popmotion": "^8.3.3",
     "prettier": "^1.13.7"
   },

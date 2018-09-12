@@ -1,20 +1,18 @@
 const schema =
   ' \
 type User { \
-  id: ID! \
+  userId: ID! \
   username: String! \
   activeMatchIds: [Int!] \
 } \
- \
 type Match { \
-  id: ID! \
+  matchId: ID! \
   isActive: Boolean! \
   userIds: [ID!]! \
   gameIds: [Int!]! \
 } \
- \
 type Game { \
-  id: ID! \
+  gameId: ID! \
   matchId: Int! \
   isActive: Boolean! \
   trumpSuit: Int \
@@ -22,22 +20,19 @@ type Game { \
   startingUserId: ID \
   tricks: [Tricks]! \
 } \
- \
 type Tricks { \
-  id: Int! \
+  trickId: Int! \
   startingUserId: ID! \
   winningUserId: ID \
   playedCardIds: [Int!]! \
 } \
- \
 type Query { \
   game(gameId: Int!): Game \
+  user(userId: ID!): User, \
 } \
- \
 type Mutation { \
   playCard(cardId: Int!, gameId: Int!): Game \
 } \
- \
 schema { \
   query: Query \
   mutation: Mutation \

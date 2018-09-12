@@ -4,40 +4,40 @@ CREATE SCHEMA game;
 CREATE SCHEMA account;
 
 CREATE TABLE account.users (
-    id UUID NOT NULL,
+    userId UUID NOT NULL,
     username VARCHAR(64) NOT NULL,
     passwordHash CHAR(64) NOT NULL, --Can change char size given hash function
-    PRIMARY KEY (id)
+    PRIMARY KEY (userId)
 );
 
 CREATE TABLE game.matches (
-    id INT NOT NULL,
+    matchId INT NOT NULL,
     isActive BOOL NOT NULL,
     userIds UUID[] NULL, -- TODO: Can these have foreign keys?
-    PRIMARY KEY (id)
+    PRIMARY KEY (matchId)
 );
 
 CREATE TABLE game.games (
-    id INT NOT NULL,
+    gameId INT NOT NULL,
     matchId INT NOT NULL,
     isActive BOOL NOT NULL,
     trumpSuit INT NULL, --This is an enum in code
     trumpNumber INT NOT NULL,
     startingUserId UUID NULL,
-    PRIMARY KEY (id),
-    FOREIGN KEY (matchId) REFERENCES game.matches (id) ON DELETE RESTRICT
+    PRIMARY KEY (gameId),
+    FOREIGN KEY (matchId) REFERENCES game.matches (matchId) ON DELETE RESTRICT
 );
 
 CREATE TABLE game.tricks (
-    id INT NOT NULL,
+    trickId INT NOT NULL,
     gameId INT NOT NULL,
     startingUserId UUID NOT NULL,
     winningUserId UUID NULL,
     playedCardIds INT[] NOT NULL,
-    PRIMARY KEY (id),
-    FOREIGN KEY (gameId) REFERENCES game.games (id) ON DELETE RESTRICT,
-    FOREIGN KEY (startingUserId) REFERENCES account.users (id) ON DELETE RESTRICT,
-    FOREIGN KEY (winningUserId) REFERENCES account.users (id) ON DELETE RESTRICT
+    PRIMARY KEY (trickId),
+    FOREIGN KEY (gameId) REFERENCES game.games (gameId) ON DELETE RESTRICT,
+    FOREIGN KEY (startingUserId) REFERENCES account.users (userId) ON DELETE RESTRICT,
+    FOREIGN KEY (winningUserId) REFERENCES account.users (userId) ON DELETE RESTRICT
 );
 
 CREATE TABLE game.gameUserInfos (
@@ -46,8 +46,8 @@ CREATE TABLE game.gameUserInfos (
     heldCardIds INT[] NOT NULL,
     points INT NOT NULL,
     PRIMARY KEY (userId, gameId),
-    FOREIGN KEY (gameId) REFERENCES game.games (id) ON DELETE RESTRICT,
-    FOREIGN KEY (userId) REFERENCES account.users (id) ON DELETE RESTRICT
+    FOREIGN KEY (gameId) REFERENCES game.games (gameId) ON DELETE RESTRICT,
+    FOREIGN KEY (userId) REFERENCES account.users (userId) ON DELETE RESTRICT
 );
 
 CREATE TABLE game.matchUserInfos (
@@ -55,15 +55,14 @@ CREATE TABLE game.matchUserInfos (
     matchId INT NOT NULL,
     level INT NOT NULL,
     PRIMARY KEY (userId, matchId),
-    FOREIGN KEY (matchId) REFERENCES game.matches (id) ON DELETE RESTRICT,
-    FOREIGN KEY (userId) REFERENCES account.users (id) ON DELETE RESTRICT
+    FOREIGN KEY (matchId) REFERENCES game.matches (matchId) ON DELETE RESTRICT,
+    FOREIGN KEY (userId) REFERENCES account.users (userId) ON DELETE RESTRICT
 );
-
 
 -----------------------------------------------
 
 -- INSERT INTO account.users (
---     id,
+--     userid,
 --     username,
 --     passwordHash
 -- )
@@ -72,7 +71,7 @@ CREATE TABLE game.matchUserInfos (
 -- SELECT * FROM account.users;
 
 -- INSERT INTO game.matches (
---     id,
+--     matchid,
 --     isActive,
 --     userIds
 -- )
@@ -81,7 +80,7 @@ CREATE TABLE game.matchUserInfos (
 -- SELECT * FROM game.matches;
 
 -- INSERT INTO game.games (
---     id,
+--     gameid,
 --     matchId,
 --     isActive,
 --     trumpSuit,
@@ -93,7 +92,7 @@ CREATE TABLE game.matchUserInfos (
 -- SELECT * FROM game.games;
 
 -- INSERT INTO game.tricks (
---     id,
+--     trickid,
 --     gameID,
 --     startingUserId,
 --     playedCardIds
