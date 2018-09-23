@@ -1,13 +1,30 @@
+# Keep enums in sync with enums.js
+enum SuitTypes {
+  clubs
+  diamonds
+  hearts
+  spades
+  jokers
+};
+
+enum PlayTypes {
+  single
+  pair
+  consecutivePair
+  shuai
+};
+
 type User {
   userId: ID!
   username: String!
-  activeMatches: [Match!]!
 }
 
 type Match {
   matchId: Int!
   isActive: Boolean!
   userIds: [ID!]!
+  userLevels: [Int!]!
+  defenderUserIds: [ID!]
   currentGame: Game!
 }
 
@@ -15,10 +32,15 @@ type Game {
   gameId: Int!
   matchId: Int!
   isActive: Boolean!
-  trumpSuit: Int
+  trumpSuit: SuitTypes
   trumpNumber: Int
   startingUserId: ID
   currentPoints: Int
+  hand: [Int!]!
+}
+
+type Hand {
+  cardIds: [Int!]!
 }
 
 type Trick {
@@ -26,15 +48,20 @@ type Trick {
   startingUserId: ID!
   winningUserId: ID
   playedCardIds: [Int!]!
+  playType: PlayTypes
 }
 
 # the schema allows the following query:
 type Query {
-  game(gameId: Int!): Game
   user(userId: ID!): User
-  match(matchId: Int!): Match
-  currentGame(matchId: Int!): Game
-  currentPoints(userId: ID!, gameId: Int!): Int
+  game(gameId: Int!, userId: ID!): Game
+  match(matchId: Int!, userId: ID!): Match
+  trick(trickId: Int!): Trick
+  activeGame(matchId: Int!, userId: ID!): Game
+  activeMatches(userId: ID!): [Match!]!
+  allGames(userId: ID!)
+  allMatches(userId: ID!)
+  allMatchGames(matchId: Int!, userId:ID!)
 }
 
 # this schema allows the following mutation:
