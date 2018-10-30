@@ -19,7 +19,7 @@ INSERT INTO game.matches (
     isActive,
     userIds
 )
-VALUES (6, true, '{"c9ed1627-cf1d-40ed-9c59-668f91c2789c"}');
+VALUES (5, true, '{"c9ed1627-cf1d-40ed-9c59-668f91c2789c"}');
 
 SELECT * FROM game.matches;
 
