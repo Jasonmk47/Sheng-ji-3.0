@@ -1,3 +1,4 @@
+// Keep in sync with the enums in graphql
 export const suitTypes = {
   clubs: 0,
   diamonds: 1,
