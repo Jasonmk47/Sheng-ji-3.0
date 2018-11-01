@@ -21,8 +21,12 @@ class Hand extends PureComponent {
       <div className={'my-hand' + handStyle.toString()}>
         <Query query={GET_CARD_IDS_IN_HAND}>
           {({ loading, error, data }) => {
-            if (loading) return null;
-            if (error) return `Error with card retrieval!: ${error}`;
+            if (loading) {
+              return null;
+            }
+            if (error) {
+              return `Error with card retrieval!: ${error}`;
+            }
             return data.Game.display.cardIdsInHand.map(cardId => {
               return <Card key={`card_${cardId}`} cardId={cardId} />;
             });

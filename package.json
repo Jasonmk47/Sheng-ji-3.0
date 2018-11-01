@@ -30,6 +30,7 @@
     "prettier": "^1.13.7"
   },
   "devDependencies": {
+    "@types/graphql": "^14.0.3",
     "babel-eslint": "^9.0.0",
     "concurrently": "^3.6.0",
     "eslint": "^5.8.0",
