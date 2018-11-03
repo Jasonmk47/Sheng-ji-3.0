@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { css } from 'glamor';
 
-import Card from './Card';
+import Card from './Card.tsx';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 

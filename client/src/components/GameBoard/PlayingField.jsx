@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 
-import Card from './Card';
+import Card from './Card.tsx';
 
 class PlayingField extends PureComponent {
   renderCardGrouping(cardGroup) {

@@ -1,11 +1,11 @@
-import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
 import { css } from 'glamor';
+
 
 import * as cardHelpers from '../../services/cardHelpers';
 
-class Card extends PureComponent {
-  state = { 
+class Card extends React.PureComponent<Props> {
+  public state = { 
     isSelected: false
   };
   render() {
@@ -21,9 +21,9 @@ class Card extends PureComponent {
   }
 }
 
-Card.propTypes = {
-  cardId: PropTypes.number.isRequired,
-};
+interface Props {
+  cardId: number
+}
 
 const cardStyle = css({
   width: '10%',
