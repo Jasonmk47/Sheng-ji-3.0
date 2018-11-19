@@ -27,9 +27,12 @@ class Hand extends PureComponent {
             if (error) {
               return `Error with card retrieval!: ${error}`;
             }
-            return data.Game.display.cardIdsInHand.map(cardId => {
-              return <Card key={`card_${cardId}`} cardId={cardId} />;
-            });
+            console.log(data);
+            return <Card key={`card_0`} cardId={1} />;
+
+//            return data.Game.display.cardIdsInHand.map(cardId => {
+  //            return <Card key={`card_${cardId}`} cardId={cardId} />;
+    //        });
           }}
         </Query>
       </div>
