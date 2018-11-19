@@ -1,6 +1,6 @@
 {
   "extends": ["tslint:recommended", "tslint-react", "tslint-config-prettier"],
-  "jsrules": {
+  "jsRules": {
     "ordered-imports" : false,
     "no-console": false,
     "object-literal-sort-keys": false

@@ -18,7 +18,7 @@ class PlayingField extends PureComponent {
     return (
       <div className="playing-field">
         {cardsOnField.map(cardGroup => {
-          return this.renderCardGrouping(cardGroup.cardIds);
+          return this.renderCardGrouping(cardGroup);
         })}
       </div>
     );
