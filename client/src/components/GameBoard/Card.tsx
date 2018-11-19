@@ -1,14 +1,13 @@
-import * as React from 'react';
 import { css } from 'glamor';
-
+import * as React from 'react';
 
 import * as cardHelpers from '../../services/cardHelpers';
 
-class Card extends React.PureComponent<Props> {
+class Card extends React.PureComponent<IProps> {
   public state = { 
     isSelected: false
   };
-  render() {
+  public render() {
     const { cardId } = this.props;
 
     return (
@@ -21,7 +20,7 @@ class Card extends React.PureComponent<Props> {
   }
 }
 
-interface Props {
+interface IProps {
   cardId: number
 }
 

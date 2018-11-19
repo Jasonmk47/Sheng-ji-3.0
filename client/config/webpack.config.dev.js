@@ -20,12 +20,8 @@ const publicPath = '/';
 // as %PUBLIC_URL% in `index.html` and `process.env.PUBLIC_URL` in JavaScript.
 // Omit trailing slash as %PUBLIC_PATH%/xyz looks better than %PUBLIC_PATH%xyz.
 const publicUrl = '';
-// Get environment variables to inject into our app.
 const env = getClientEnvironment(publicUrl);
 
-// This is the development configuration.
-// It is focused on developer experience and fast rebuilds.
-// The production configuration is different and lives in a separate file.
 module.exports = {
   // You may want 'eval' instead if you prefer to see the compiled output in DevTools.
   // See the discussion in https://github.com/facebookincubator/create-react-app/issues/343.
@@ -47,12 +43,12 @@ module.exports = {
     // require.resolve('webpack-dev-server/client') + '?/',
     // require.resolve('webpack/hot/dev-server'),
     // JK - Did so and replaced require.resolve('react-dev-utils/webpackHotDevClient'),
+    require.resolve('webpack-dev-server/client') + '?/',
     require.resolve('webpack/hot/dev-server'),
-    // Finally, this is your app's code:
-    paths.appIndexJs,
     // We include the app code last so that if there is a runtime error during
     // initialization, it doesn't blow up the WebpackDevServer client, and
     // changing JS code would still trigger a refresh.
+    paths.appIndexJs,
   ],
   output: {
     // Add /* filename */ comments to generated require()s in the output.
@@ -84,7 +80,18 @@ module.exports = {
     // https://github.com/facebookincubator/create-react-app/issues/290
     // `web` extension prefixes have been added for better support
     // for React Native Web.
-    extensions: ['.web.js', '.mjs', '.js', '.json', '.web.jsx', '.jsx'],
+    extensions: [
+      '.mjs',
+      '.web.ts',
+      '.ts',
+      '.web.tsx',
+      '.tsx',
+      '.web.js',
+      '.js',
+      '.json',
+      '.web.jsx',
+      '.jsx',
+    ],
     alias: {
       // Support React Native Web
       // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
@@ -103,9 +110,6 @@ module.exports = {
   module: {
     strictExportPresence: true,
     rules: [
-      // TODO: Disable require.ensure as it's not a standard language feature.
-      // We are waiting for https://github.com/facebookincubator/create-react-app/issues/2176.
-      // { parser: { requireEnsure: false } },
       {
         test: /\.(js|jsx|mjs)$/,
         loader: require.resolve('source-map-loader'),
@@ -138,6 +142,7 @@ module.exports = {
               // It enables caching results in ./node_modules/.cache/babel-loader/
               // directory for faster rebuilds.
               cacheDirectory: true,
+              compact: true,
             },
           },
           {

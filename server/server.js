@@ -1,4 +1,3 @@
-//JK - I want to move this but need to wait to eject from create-react-app
 //Keep this at the top. sets environment
 require('dotenv').config({ path: __dirname + '/.env' });
 

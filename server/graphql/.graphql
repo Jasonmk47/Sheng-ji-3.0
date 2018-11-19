@@ -1,4 +1,4 @@
-# Keep enums in sync with enums.js
+# Keep enums in sync with enums.ts
 enum SuitTypes {
   clubs
   diamonds

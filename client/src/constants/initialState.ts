@@ -1,11 +1,11 @@
-import { suitTypes } from './enums.js';
+import { suitTypes } from './enums';
 
 const Account = {
-  userId: null,
   __typename: 'Account',
+  userId: null,
 };
 
-//These fields will have to be initialized on game load
+// These fields will have to be initialized on game load
 const Game = {
   currentGameId: -1,
   // Cards selected will be handled in component state
@@ -28,4 +28,4 @@ const Game = {
   __typename: 'Game',
 };
 
-export default { account: Account, Game: Game };
+export default { account: Account, game: Game };
