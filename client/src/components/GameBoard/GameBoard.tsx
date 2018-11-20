@@ -1,13 +1,13 @@
-import React, { PureComponent } from 'react';
+import * as React from 'react';
 
 import PlayingField from './PlayingField';
 import Hand from './Hand';
 
-class GameBoard extends PureComponent {
+class GameBoard extends React.PureComponent  {
   render() {
     // TODO: remove
-    var test = [];
-    test[0] = {cardIds: [1]}
+    const test = [];
+    test[0] = {cardIds: [1], userId: 'test'}
 
     return (
       <div className="game-board">

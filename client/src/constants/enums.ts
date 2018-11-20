@@ -13,3 +13,10 @@ export const playTypes = {
   consecutivePair: 2,
   shuai: 3,
 };
+
+export enum PlayTypes {
+  single = 1,
+  pair,
+  consecutivePair,
+  shuai
+}

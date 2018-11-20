@@ -1,7 +1,9 @@
+import { CardNameMap } from '../types/cardTypes';
+
 // Generated with the generateCardMappings.py script
 // Changed joker names manually
 // If you have more decks, just mod 54 to figure out which to use
-export const cardIdToCardNameDict = {
+export const cardIdToCardNameDict: CardNameMap = {
   '-1': 'card back',
   0: '2 of clubs',
   1: '3 of clubs',

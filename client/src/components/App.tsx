@@ -1,15 +1,12 @@
-import React, { PureComponent } from 'react';
-
-import logo from '../logo.svg';
+import * as React from 'react';
 
 import '../styles/App.css';
 
-class App extends PureComponent {
+class App extends React.PureComponent {
   render() {
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Sheng Ji</h1>
         </header>
       </div>

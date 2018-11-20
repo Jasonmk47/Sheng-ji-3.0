@@ -3,11 +3,12 @@ import * as React from 'react';
 
 import * as cardHelpers from '../../services/cardHelpers';
 
-class Card extends React.PureComponent<IProps> {
-  public state = { 
+class Card extends React.PureComponent<IProps, IState> {
+  state = { 
     isSelected: false
   };
-  public render() {
+  
+  render() {
     const { cardId } = this.props;
 
     return (
@@ -22,6 +23,10 @@ class Card extends React.PureComponent<IProps> {
 
 interface IProps {
   cardId: number
+}
+
+interface IState {
+  isSelected: boolean
 }
 
 const cardStyle = css({

@@ -1,9 +1,9 @@
-import React, { PureComponent } from 'react';
+import * as React from 'react';
 import { css } from 'glamor';
-
-import Card from './Card.tsx';
-import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
+
+import Card from './Card';
+import { HandQuery } from '../../types/queryTypes';
 
 const GET_CARD_IDS_IN_HAND = gql`
   query {
@@ -15,11 +15,11 @@ const GET_CARD_IDS_IN_HAND = gql`
   }
 `;
 
-class Hand extends PureComponent {
+class Hand extends React.PureComponent {
   render() {
     return (
       <div className={'my-hand' + handStyle.toString()}>
-        <Query query={GET_CARD_IDS_IN_HAND}>
+        <HandQuery query={GET_CARD_IDS_IN_HAND}>
           {({ loading, error, data }) => {
             if (loading) {
               return null;
@@ -34,7 +34,7 @@ class Hand extends PureComponent {
   //            return <Card key={`card_${cardId}`} cardId={cardId} />;
     //        });
           }}
-        </Query>
+        </HandQuery>
       </div>
     );
   }
