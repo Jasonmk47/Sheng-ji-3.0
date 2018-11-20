@@ -2,7 +2,7 @@ const resolverMap = {
   user: async (args, context) => {
     return await context
       .one(
-        "SELECT u.userId, u.username, array_agg(m.matchId) AS matches FROM account.users u JOIN game.matches m ON u.userId = ANY(m.userIds) WHERE u.userId = '" +
+        "SELECT u.userId, u.username, array_agg(m.matchId) AS matches FROM account.users u LEFT JOIN game.matches m ON u.userId = ANY(m.userIds) WHERE u.userId = '" +
           args.userId +
           "' GROUP BY u.userId;",
       )
