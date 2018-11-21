@@ -1,63 +1,63 @@
-import { suitTypes, playTypes } from '../constants/enums';
+import { suits, plays } from '../constants/enums';
 import { cardIdToPictureDict } from '../constants/cardIdToPicture';
 import { cardIdToCardNameDict } from '../constants/cardIdToName';
 
-export const getSuitIdFromCardId = cardId => {
+export const getSuitIdFromCardId = (cardId: number) => {
   validateCardId(cardId);
   cardId %= 54;
   if (cardId < 13) {
-    return suitTypes.clubs;
+    return suits.clubs;
   } else if (cardId < 26) {
-    return suitTypes.diamonds;
+    return suits.diamonds;
   } else if (cardId < 39) {
-    return suitTypes.hearts;
+    return suits.hearts;
   } else if (cardId < 52) {
-    return suitTypes.spades;
+    return suits.spades;
   } else {
-    return suitTypes.jokers;
+    return suits.jokers;
   }
 };
 
-export const getNumberFromCardId = cardId => {
-  if (getSuitIdFromCardId(cardId) === suitTypes.jokers) {
+export const getNumberFromCardId = (cardId: number) => {
+  if (getSuitIdFromCardId(cardId) === suits.jokers) {
     return cardId % 54;
   }
   // 52, 53
   else if (cardId % 13 === 1) {
     return 14;
   }
-  //force ace to be higher
+  // force ace to be higher
   else {
     return cardId % 13; // return card numbers
   }
 };
 
-export const getPictureUrlFromCardId = cardId => {
+export const getPictureUrlFromCardId = (cardId: number) => {
   validateCardId(cardId);
   return cardIdToPictureDict[cardId % 54];
 };
 
-export const getCardNameFromCardId = cardId => {
+export const getCardNameFromCardId = (cardId: number) => {
   validateCardId(cardId);
   return cardIdToCardNameDict[cardId % 54];
 };
 
-export const getIsTrumpFromCardId = (cardId, gameState) => {
+export const getIsTrumpFromCardId = (cardId: number, gameState: any) => {
   validateCardId(cardId);
   const suit = getSuitIdFromCardId(cardId);
-  if (suit === suitTypes.jokers || suit === gameState.boardState.trumpSuit) {
+  if (suit === suits.jokers || suit === gameState.boardState.trumpSuit) {
     return true;
   } else {
     return false;
   }
 };
 
-export const getIsInSuitFromCardId = (cardId, gameState) => {
+export const getIsInSuitFromCardId = (cardId: number, gameState: any) => {
   validateCardId(cardId);
   return getSuitIdFromCardId(cardId) === gameState.boardState.startingSuit;
 };
 
-export const getPlayTypeFromCardIds = cardIds => {
+export const getPlayTypeFromCardIds = (cardIds: number[]) => {
   cardIds.forEach(cardId => validateCardId(cardId));
   const sortedCardIds = cardIds.sort((a, b) => a - b);
   const numCards = sortedCardIds.length;
@@ -70,11 +70,11 @@ export const getPlayTypeFromCardIds = cardIds => {
   */
 
   if (numCards === 1) {
-    return playTypes.single;
+    return plays.single;
   } else if (numCards === 2) {
     return checkCardsEqual(sortedCardIds[0], sortedCardIds[1])
-      ? playTypes.pair
-      : playTypes.shuai;
+      ? plays.pair
+      : plays.shuai;
   } else if (numCards % 2 === 0) {
     let prevValue = -1;
     for (let i = 0; i < numCards; i += 2) {
@@ -87,17 +87,17 @@ export const getPlayTypeFromCardIds = cardIds => {
                 getSuitIdFromCardId(prevValue)))
         )
       ) {
-        return playTypes.shuai;
+        return plays.shuai;
       }
       prevValue = sortedCardIds[i];
     }
-    return playTypes.consecutivePair;
+    return plays.consecutivePair;
   } else {
-    return playTypes.shaui;
+    return plays.shuai;
   }
 };
 
-export const isPair = hand => {
+export const isPair = (hand: number[]) => {
   if (typeof hand === 'undefined') {
     throw new Error(`Hand is undefined; cannot check for pairs`);
   }
@@ -112,7 +112,7 @@ export const isPair = hand => {
   return (hand[0] = hand[1]);
 };
 
-export const isConsecutivePair = sortedHand => {
+export const isConsecutivePair = (sortedHand: number[]) => {
   const suit = getSuitIdFromCardId(sortedHand[0]);
 
   // NEED TO CAPTURE EDGE CASES (e.g., jokers, skipping trump number)
@@ -125,7 +125,7 @@ export const isConsecutivePair = sortedHand => {
   ); // consecutive
 };
 
-export const getHigherCard = (cardId1, cardId2, gameState) => {
+export const getHigherCard = (cardId1: number, cardId2: number, gameState: any) => {
   // If only one person played trump
   if (
     getIsTrumpFromCardId(cardId1, gameState) &&
@@ -158,13 +158,13 @@ export const getHigherCard = (cardId1, cardId2, gameState) => {
   return getNumberFromCardId(cardId1) >= getNumberFromCardId(cardId2);
 };
 
-const checkCardsEqual = (cardId1, cardId2) => {
+const checkCardsEqual = (cardId1: number, cardId2: number) => {
   return cardId1 % 54 === cardId2 % 54;
 };
 
 // -1 is for a card back
 // % is the remainder operation in js not mod so this works
-const validateCardId = cardId => {
+const validateCardId = (cardId: number) => {
   if (cardId < -1) {
     throw new Error('CardId was negative: ' + cardId);
   }

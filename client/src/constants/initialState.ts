@@ -1,4 +1,4 @@
-import { suitTypes } from './enums';
+import { suits } from './enums';
 
 const Account = {
   __typename: 'Account',
@@ -18,7 +18,7 @@ const Game = {
     __typename: 'Display',
   },
   boardState: {
-    trumpSuit: suitTypes.jokers,
+    trumpSuit: suits.jokers,
     trumpNumber: -1,
     selfPoints: 0,
     teamPoints: 0,
