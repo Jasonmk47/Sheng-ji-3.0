@@ -7,10 +7,8 @@ import { HandQuery } from '../../types/queryTypes';
 
 const GET_CARD_IDS_IN_HAND = gql`
   query {
-    Game @client {
-      display {
-        cardIdsInHand
-      }
+    activeGame($matchId: Int!, $userId: ID!) {
+      hand
     }
   }
 `;
@@ -19,7 +17,7 @@ class Hand extends React.PureComponent {
   render() {
     return (
       <div className={'my-hand' + handStyle.toString()}>
-        <HandQuery query={GET_CARD_IDS_IN_HAND}>
+        <HandQuery query={GET_CARD_IDS_IN_HAND} variables={{matchId: 5, userId: 'c9ed1627-cf1d-40ed-9c59-668f91c2789c'}}>
           {({ loading, error, data }) => {
             if (loading) {
               return null;
@@ -27,12 +25,13 @@ class Hand extends React.PureComponent {
             if (error) {
               return `Error with card retrieval!: ${error}`;
             }
-            console.log(data);
-            return <Card key={`card_0`} cardId={1} />;
-
-//            return data.Game.display.cardIdsInHand.map(cardId => {
-  //            return <Card key={`card_${cardId}`} cardId={cardId} />;
-    //        });
+            if (data === undefined) {
+              console.error("No hand returned");
+              return;
+            }
+            return data.hand.map(cardId => {
+              return <Card key={`card_${cardId}`} cardId={cardId} />;
+           });
           }}
         </HandQuery>
       </div>

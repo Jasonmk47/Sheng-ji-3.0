@@ -15,10 +15,10 @@ const resolverMap = {
       })
       .catch(err => console.error('Failed to read users', err));
   },
-  currentGame: async (args, context) => {
+  activeGame: async (args, context) => {
     return await context
       .one(
-        "SELECT g.gameId, m.matchId, g.isActive, g.trumpSuit, g.trumpNumber, g.startingUserId FROM game.matches m JOIN game.games g ON m.matchId = g.matchId WHERE g.isActive = TRUE AND g.matchId = '" +
+        "SELECT g.gameId, m.matchId, g.isActive, g.trumpSuit, g.trumpNumber, g.startingUserId, gui.heldCardIds AS hand FROM game.matches m JOIN game.games g ON m.matchId = g.matchId JOIN game.gameUserInfos gui ON gui.gameId = g.gameId  WHERE g.isActive = TRUE AND g.matchId = '" +
           args.matchId +
           "'",
       )
@@ -31,12 +31,11 @@ const resolverMap = {
           trumpSuit: data.trumpsuit,
           trumpNumber: data.trumpnumber,
           startingUserId: data.startinguserid,
-          tricks: [1],
+          hand: data.hand,
         };
       })
       .catch(err => console.error('Failed to read users', err));
   },
-  playCard: (cardId, gameId) => {},
 };
 
 module.exports = resolverMap;

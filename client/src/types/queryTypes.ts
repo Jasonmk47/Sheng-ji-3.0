@@ -1,13 +1,12 @@
 import { Query } from 'react-apollo';
 
 interface Data {
-  allPeople: {
-    people: Array<{ name: string }>;
-  };
+  hand: number[];
 }
 
 interface Variables {
-  first: number;
+  matchId: number;
+  userId: string;
 }
 
 export class HandQuery extends Query<Data, Variables> {}
