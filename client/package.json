@@ -74,7 +74,8 @@
     "testEnvironment": "node",
     "testURL": "http://localhost",
     "transform": {
-      "^.+\\.(js|jsx|mjs|ts|tsx)$": "<rootDir>/node_modules/babel-jest",
+      "^.+\\.(js|jsx|mjs)$": "<rootDir>/node_modules/babel-jest",
+      "^.+\\.(ts|tsx)$": "<rootDir>/node_modules/ts-jest",
       "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",
       "^(?!.*\\.(js|jsx|mjs|css|json|ts|tsx)$)": "<rootDir>/config/jest/fileTransform.js"
     },
@@ -110,7 +111,7 @@
     "awesome-typescript-loader": "^5.2.1",
     "jest": "^20.0.4",
     "jest-cli": "^20.0.4",
-    "ts-jest": "^23.10.4",
+    "ts-jest": "^23.10.5",
     "tsconfig-paths-webpack-plugin": "^3.2.0"
   }
 }
