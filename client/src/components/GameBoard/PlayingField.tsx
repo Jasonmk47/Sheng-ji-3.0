@@ -1,9 +1,18 @@
 import * as React from 'react';
+import gql from 'graphql-tag';
 
 import Card from './Card';
 import { CardGroup } from '../../types/cardTypes';
+import { FieldQuery } from '../../types/queryTypes';
 
-class PlayingField extends React.PureComponent<IProps> {
+const GET_CARD_IDS_ON_FIELD = gql`
+  query {
+    display @client {
+      cardIdsVisible
+    }
+  }
+`;
+class PlayingField extends React.PureComponent{
   renderCardGrouping(cardGroup: CardGroup) {
     return (
       <div key={'played_cards_userId_' + cardGroup.userId}>
@@ -15,19 +24,29 @@ class PlayingField extends React.PureComponent<IProps> {
   }
 
   render() {
-    const { cardsOnField } = this.props;
     return (
       <div className="playing-field">
-        {cardsOnField.map(cardGroup => {
-          return this.renderCardGrouping(cardGroup);
-        })}
+      <FieldQuery query={GET_CARD_IDS_ON_FIELD}>
+        {({ loading, error, data }) => {
+          if (loading) {
+            return null;
+          }
+          if (error) {
+            return `Error with field card retrieval!: ${error}`;
+          }
+          if (data === undefined) {
+            console.error("No playing fiend returned");
+            return;
+		      }
+		      console.log(data)
+          return data.display.cardIdsVisible.map(cardId => {
+            return <Card key={`card_${cardId}`} cardId={cardId} />;
+        });
+        }}
+      </FieldQuery>
       </div>
     );
   }
-}
-
-interface IProps {
-  cardsOnField: CardGroup[]
 }
 
 export default PlayingField;
