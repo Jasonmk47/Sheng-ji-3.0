@@ -6,8 +6,8 @@ import Card from './Card';
 import { HandQuery } from '../../types/queryTypes';
 
 const GET_CARD_IDS_IN_HAND = gql`
-  query {
-    activeGame($matchId: Int!, $userId: ID!) {
+  query($matchId: Int!, $userId: ID!) {
+    activeGame(matchId: $matchId, userId: $userId) {
       hand
     }
   }
@@ -29,7 +29,7 @@ class Hand extends React.PureComponent {
               console.error("No hand returned");
               return;
             }
-            return data.hand.map(cardId => {
+            return data.activeGame.hand.map(cardId => {
               return <Card key={`card_${cardId}`} cardId={cardId} />;
            });
           }}

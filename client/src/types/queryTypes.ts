@@ -1,7 +1,9 @@
 import { Query } from 'react-apollo';
 
 interface Data {
-  hand: number[];
+	activeGame: {
+		hand: number[];
+	}
 }
 
 interface Variables {
