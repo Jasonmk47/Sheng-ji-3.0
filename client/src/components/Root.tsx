@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { ApolloProvider } from 'react-apollo';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { ApolloClient, NormalizedCacheObject } from 'apollo-boost';
+import { ApolloClient } from 'apollo-client';
+import { NormalizedCacheObject } from 'apollo-cache-inmemory';
 
 import App from './App';
 import GameBoard from './GameBoard/GameBoard';

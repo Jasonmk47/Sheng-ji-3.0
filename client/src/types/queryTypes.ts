@@ -1,4 +1,5 @@
 import { Query } from 'react-apollo';
+import { CardGroup } from './cardTypes';
 
 interface HandData {
 	activeGame: {
@@ -14,9 +15,11 @@ interface HandVariables {
 export class HandQuery extends Query<HandData, HandVariables> {}
 
 interface FieldData {
-  display: {
-    cardIdsVisible: number[]
-	}
+  game: {
+    display: {
+      cardGroupsVisible: CardGroup[]
+    }
+  }
 }
 
 export class FieldQuery extends Query<FieldData> {}

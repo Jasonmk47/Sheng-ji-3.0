@@ -10,9 +10,9 @@ const Game = {
   currentGameId: -1,
   // Cards selected will be handled in component state
   display: {
-    cardIdsVisible: [
-      { userId: 1, cardIds: [7, 8], __typename: "CardGroup" },
-      { userId: 2, cardIds: [9, 10], __typename: "CardGroup" },
+    cardGroupsVisible: [
+      { userId: 1, cardIds: [30, 31], __typename: "CardGroup" },
+      { userId: 2, cardIds: [32, 33], __typename: "CardGroup" },
     ],
     cardIdsInHand: [1, 2, 3],
     __typename: 'Display',

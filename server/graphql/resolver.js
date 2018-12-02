@@ -23,7 +23,6 @@ const resolverMap = {
           "'",
       )
       .then(data => {
-        console.log(data);
         return {
           gameId: data.gameid,
           matchId: data.matchid,

@@ -7,11 +7,17 @@ import { FieldQuery } from '../../types/queryTypes';
 
 const GET_CARD_IDS_ON_FIELD = gql`
   query {
-    display @client {
-      cardIdsVisible
+    game @client {
+      display {
+        cardGroupsVisible {
+          userId
+          cardIds
+        }
+      }
     }
   }
 `;
+
 class PlayingField extends React.PureComponent{
   renderCardGrouping(cardGroup: CardGroup) {
     return (
@@ -38,9 +44,8 @@ class PlayingField extends React.PureComponent{
             console.error("No playing fiend returned");
             return;
 		      }
-		      console.log(data)
-          return data.display.cardIdsVisible.map(cardId => {
-            return <Card key={`card_${cardId}`} cardId={cardId} />;
+          return data.game.display.cardGroupsVisible.map(cardGroup => {
+            return cardGroup.cardIds.map((cardId) => <Card key={`card_${cardId}`} cardId={cardId} />);
         });
         }}
       </FieldQuery>
