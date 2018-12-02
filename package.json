@@ -23,17 +23,17 @@
     "glamor": "^2.20.40",
     "graphql": "^0.13.2",
     "lodash": "^4.17.10",
-    "nodemon": "^1.17.5",
-    "pg": "^7.4.3",
-    "pg-promise": "^8.4.6",
-    "popmotion": "^8.3.3",
-    "prettier": "^1.13.7"
+    "nodemon": "^1.18.7",
+    "pg": "^7.7.1",
+    "pg-promise": "^8.5.3",
+    "popmotion": "^8.5.3",
+    "prettier": "^1.15.3"
   },
   "devDependencies": {
     "@types/graphql": "^14.0.3",
     "babel-eslint": "^9.0.0",
     "concurrently": "^3.6.0",
-    "eslint": "^5.8.0",
+    "eslint": "^5.9.0",
     "eslint-config-react-app": "^3.0.5",
     "eslint-plugin-flowtype": "^2.50.3",
     "eslint-plugin-import": "^2.14.0",
