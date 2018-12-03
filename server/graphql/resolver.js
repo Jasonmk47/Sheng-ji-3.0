@@ -1,4 +1,22 @@
 const resolverMap = {
+
+  allUsers: async (args, context) => {
+    return await context
+      .any(
+        "SELECT u.userId, u.username FROM account.users u GROUP BY u.userId;",
+      ) 
+      .then(data => {
+
+        return Object.keys(data).map(function(key){
+          data[key][ "userId" ] = data[key][ "userid" ];
+          delete data[key][ "userid" ]; 
+          return data[key]
+        });
+        
+      })
+      .catch(err => console.error('Failed to read all users', err));
+  }, 
+
   user: async (args, context) => {
     return await context
       .one(
