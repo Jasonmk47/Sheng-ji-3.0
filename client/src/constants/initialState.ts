@@ -14,7 +14,6 @@ const Game = {
       { userId: 1, cardIds: [30, 31], __typename: "CardGroup" },
       { userId: 2, cardIds: [32, 33], __typename: "CardGroup" },
     ],
-    cardIdsInHand: [1, 2, 3],
     __typename: 'Display',
   },
   boardState: {

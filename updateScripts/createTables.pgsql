@@ -21,7 +21,7 @@ CREATE TABLE game.games (
     gameId INT NOT NULL,
     matchId INT NOT NULL,
     isActive BOOL NOT NULL,
-    trumpSuit INT NULL, --This is an enum in code
+    trumpSuit INT NULL, --This is an enum in cade
     trumpNumber INT NOT NULL,
     startingUserId UUID NULL,
     PRIMARY KEY (gameId),
