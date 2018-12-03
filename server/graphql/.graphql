@@ -1,3 +1,4 @@
+
 type User {
   userId: ID!
   username: String!
@@ -36,8 +37,9 @@ type Trick {
 
 # the schema allows the following query:
 type Query {
+  allUsers(userId: ID!):[User!]
   user(userId: ID!): User
-  game(gameId: Int!, userId: ID!): Game
+  game(gameId: Int!, userId: ID!): Game  # why do we need userID?
   match(matchId: Int!, userId: ID!): Match
   trick(trickId: Int!): Trick
   activeGame(matchId: Int!, userId: ID!): Game
