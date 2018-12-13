@@ -5,6 +5,7 @@ import { Redirect } from 'react-router-dom';
 class App extends React.PureComponent<{}, IState> {
   state = {
     redirect: false,
+    selectedGameId: '',
   };
 
   setRedirect = () => {
@@ -13,26 +14,42 @@ class App extends React.PureComponent<{}, IState> {
     });
   };
 
-  renderRedirect = () => {
-    if (this.state.redirect) {
+  renderGameRedirect = () => {
+    const { redirect } = this.state;
+
+    if (redirect) {
       return <Redirect to={'/game/'} />;
     }
     return null;
   };
 
+  renderNewGameRedirect = () => {
+    const { redirect, selectedGameId } = this.state;
+
+    if (selectedGameId === '') {
+      console.error('Had no selected game')
+    }
+
+    if (redirect) {
+      return <Redirect to={'/game/' + selectedGameId} />;
+    }
+    return null;
+  }
+
   render() {
+    const { selectedGameId } = this.state;
     return (
       <div className={appStyle.toString()}>
         <header className={appHeader.toString()}>
           <h1>Sheng Ji</h1>
         </header>
         <div className={buttonWrapper.toString()}>
-          {this.renderRedirect()}
+          {this.renderNewGameRedirect()}
           <button onClick={this.setRedirect}>Create Game</button>
         </div>
         <div className={buttonWrapper.toString()}>
-          {this.renderRedirect()}
-          <button onClick={this.setRedirect}>Join Game</button>
+          {this.renderGameRedirect()}
+          <button onClick={this.setRedirect} disabled={selectedGameId === ''}>Join Game</button>
         </div>
       </div>
     );
