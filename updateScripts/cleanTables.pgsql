@@ -13,3 +13,6 @@ DROP TABLE game.tricks CASCADE;
 DROP TABLE game.games CASCADE;
 DROP TABLE game.matches CASCADE;
 DROP TABLE account.users CASCADE;
+
+DROP SCHEMA account;
+DROP SCHEMA game;

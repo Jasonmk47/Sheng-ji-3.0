@@ -14,8 +14,6 @@ const app = express();
 const port = process.env.PORT || 5000;
 const dev = process.env.NODE_ENV === 'development';
 
-console.log(process.env.NODE_ENV)
-
 // Postgres setup
 // Hard coded fallback (put in .env file if you want to check against real db
 // and don't commit .env file)

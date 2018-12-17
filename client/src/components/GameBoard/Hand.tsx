@@ -17,7 +17,7 @@ class Hand extends React.PureComponent {
   render() {
     return (
       <div className={'my-hand' + handStyle.toString()}>
-        <HandQuery query={GET_CARD_IDS_IN_HAND} variables={{matchId: 5, userId: 'c9ed1627-cf1d-40ed-9c59-668f91c2789c'}}>
+        <HandQuery query={GET_CARD_IDS_IN_HAND} variables={{matchId: 2, userId: '11111111-1111-1111-1111-111111111111'}}>
           {({ loading, error, data }) => {
             if (loading) {
               return null;
