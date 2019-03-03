@@ -35,6 +35,6 @@ interface IProps extends RouteComponentProps<{}> {}
 
 const listCss = css({ listStyle: 'none', padding: '1rem' });
 
-const wrapperCss = css({});
+const wrapperCss = css({ flex: '1 1 auto' });
 
 const buttonWrapperCss = css({ flexDirection: 'column', flex: '1 1 auto' });
