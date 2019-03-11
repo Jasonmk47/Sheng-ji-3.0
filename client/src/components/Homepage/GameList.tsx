@@ -2,7 +2,7 @@ import * as React from 'react';
 import { css } from 'glamor';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
-import { Button } from './Buttons/Button';
+import { Button } from '../Utilities/Buttons/Button';
 import { GameListItem } from './GameListItem';
 import { gameRouteBase } from '../../constants/routes';
 

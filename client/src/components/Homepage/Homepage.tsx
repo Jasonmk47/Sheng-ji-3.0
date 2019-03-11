@@ -2,7 +2,7 @@ import * as React from 'react';
 import { css } from 'glamor';
 
 import { AppHeader } from './AppHeader';
-import { CreateGameButton } from './Buttons/CreateGameButton';
+import { CreateGameButton } from '../Utilities/Buttons/CreateGameButton';
 import { GameList } from './GameList';
 
 export class Homepage extends React.PureComponent {
