@@ -4,27 +4,28 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { ApolloClient } from 'apollo-client';
 import { NormalizedCacheObject } from 'apollo-cache-inmemory';
 
-import App from './App';
+import { Homepage } from './Homepage/Homepage';
 import GameBoard from './GameBoard/GameBoard';
+import { gameRouteFull } from '../constants/routes';
 
 class Root extends React.PureComponent<IProps> {
-	render() {
-		const { apolloClient } = this.props;
-		return (
-			<ApolloProvider client={apolloClient}>
-				<Router>
-					<Switch>
-						<Route path="/game/:filter?" component={GameBoard} />
-						<Route path="/:filter?" component={App} />
-					</Switch>
-				</Router>
-			</ApolloProvider>
-		);
-	}
+  render() {
+    const { apolloClient } = this.props;
+    return (
+      <ApolloProvider client={apolloClient}>
+        <Router>
+          <Switch>
+            <Route path={gameRouteFull} component={GameBoard} />
+            <Route path="/:filter?" component={Homepage} />
+          </Switch>
+        </Router>
+      </ApolloProvider>
+    );
+  }
 }
 
 interface IProps {
-	apolloClient: ApolloClient<NormalizedCacheObject>;
+  apolloClient: ApolloClient<NormalizedCacheObject>;
 }
 
 export default Root;

@@ -1,9 +1,9 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
-import App from '../components/App';
+import { Homepage } from '../components/Homepage/Homepage';
 
-it('renders without crashing', () => {
+it('homepage renders without crashing', () => {
   const div = document.createElement('div');
-  ReactDOM.render(<App />, div);
+  ReactDOM.render(<Homepage />, div);
 });
