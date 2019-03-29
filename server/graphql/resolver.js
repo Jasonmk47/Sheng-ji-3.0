@@ -55,6 +55,28 @@ const resolverMap = {
       })
       .catch(err => console.error('Failed to read users', err));
   },
+  allGames: async (args, context) => {
+    return await context
+      .any(
+        `SELECT * from game.games g JOIN game.gameUserInfos gui ON g.gameId = gui.gameId WHERE gui.userId = '${
+          args.userId
+        }'`,
+      )
+      .then(data => {
+        return data.map(game => {
+          return {
+            gameId: game.gameid,
+            matchId: game.matchid,
+            isActive: game.isactive,
+            trumpSuit: game.trumpsuit,
+            trumpNumber: game.trumpnumber,
+            startingUserId: game.startinguserid,
+            currentPoints: game.currentpoints,
+            hand: game.heldcardids,
+          };
+        });
+      });
+  },
 };
 
 module.exports = resolverMap;

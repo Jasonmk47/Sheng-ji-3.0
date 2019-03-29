@@ -1,5 +1,6 @@
 import { Query } from 'react-apollo';
 import { CardGroup } from './cardTypes';
+import { GameInfo } from './gameInfo';
 
 interface HandData {
   activeGame: {
@@ -25,10 +26,7 @@ interface FieldData {
 export class FieldQuery extends Query<FieldData> {}
 
 interface GameListData {
-  games: {
-    userIds: number[];
-    userNames: string[];
-  };
+  allGames: GameInfo[];
 }
 
 interface GameListVariables {

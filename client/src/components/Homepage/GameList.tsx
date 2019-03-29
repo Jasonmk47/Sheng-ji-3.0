@@ -1,10 +1,23 @@
 import * as React from 'react';
 import { css } from 'glamor';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
+import gql from 'graphql-tag';
 
 import { Button } from './Buttons/Button';
 import { GameListItem } from './GameListItem';
 import { gameRouteBase } from '../../constants/routes';
+
+import { GameListQuery } from '../../types/queryTypes';
+
+const GET_CARD_IDS_IN_HAND = gql`
+  query($userId: ID!) {
+    allGames(userId: $userId) {
+      gameId
+      isActive
+      currentPoints
+    }
+  }
+`;
 
 export const GameList = React.memo(
   withRouter(({ history }: IProps) => {
@@ -14,7 +27,32 @@ export const GameList = React.memo(
     return (
       <div className={wrapperCss.toString()}>
         <ul className={listCss.toString()}>
-          <GameListItem gameId={1} onClick={() => setGameId(1)} />
+          <GameListQuery
+            query={GET_CARD_IDS_IN_HAND}
+            variables={{ userId: '11111111-1111-1111-1111-111111111111' }}
+          >
+            {({ loading, error, data }) => {
+              if (loading) {
+                return null;
+              }
+              if (error) {
+                return `Error with game list retrieval!: ${error}`;
+              }
+              if (data === undefined || data.allGames === undefined) {
+                console.log(data);
+                return null;
+              }
+              return data.allGames.map(game => {
+                return (
+                  <GameListItem
+                    key={game.gameId}
+                    gameInfo={game}
+                    onClick={() => setGameId(1)}
+                  />
+                );
+              });
+            }}
+          </GameListQuery>
         </ul>
         <div className={buttonWrapperCss.toString()}>
           <Button
