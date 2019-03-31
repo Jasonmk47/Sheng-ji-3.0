@@ -1,20 +1,4 @@
 const resolverMap = {
-  allUsers: async (_, context) => {
-    return await context
-      .any(
-        `SELECT u.userId, u.username
-         FROM account.users u
-         GROUP BY u.userId;`,
-      )
-      .then(data => {
-        return Object.keys(data).map(function(key) {
-          data[key]['userId'] = data[key]['userid'];
-          delete data[key]['userid'];
-          return data[key];
-        });
-      })
-      .catch(err => console.error('Failed to read all users', err));
-  },
   user: async (args, context) => {
     return await context
       .one(
@@ -34,14 +18,14 @@ const resolverMap = {
   activeMatches: async (args, context) => {
     return await context
       .one(
-        `
-        SELECT * FROM game.matches m
+        `SELECT * FROM game.matches m
         WHERE m.matchId IN
         (SELECT array_agg(m.matchId) AS matches
           FROM account.users u
           LEFT JOIN game.matches m
           ON u.userId = ANY(m.userIds)
-          WHERE u.userId = '${args.userId}' GROUP BY u.userId);`,
+          WHERE u.userId = '${args.userId}'
+          GROUP BY u.userId);`,
       )
       .then(data => {
         console.log(data);
