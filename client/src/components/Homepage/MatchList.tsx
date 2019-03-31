@@ -4,10 +4,10 @@ import { withRouter, RouteComponentProps } from 'react-router-dom';
 import gql from 'graphql-tag';
 
 import { Button } from './Buttons/Button';
-import { GameListItem } from './GameListItem';
+import { MatchListItem } from './MatchListItem';
 import { gameRouteBase } from '../../constants/routes';
 
-import { GameListQuery } from '../../types/queryTypes';
+import { AllMatchesQuery } from '../../types/queryTypes';
 
 const GET_CARD_IDS_IN_HAND = gql`
   query($userId: ID!) {
@@ -19,7 +19,7 @@ const GET_CARD_IDS_IN_HAND = gql`
   }
 `;
 
-export const GameList = React.memo(
+export const MatchList = React.memo(
   withRouter(({ history }: IProps) => {
     const [selectedGameId, setGameId] = React.useState();
 
@@ -27,7 +27,7 @@ export const GameList = React.memo(
     return (
       <div className={wrapperCss.toString()}>
         <ul className={listCss.toString()}>
-          <GameListQuery
+          <AllMatchesQuery
             query={GET_CARD_IDS_IN_HAND}
             variables={{ userId: '11111111-1111-1111-1111-111111111111' }}
           >
@@ -38,21 +38,21 @@ export const GameList = React.memo(
               if (error) {
                 return `Error with game list retrieval!: ${error}`;
               }
-              if (data === undefined || data.allGames === undefined) {
-                console.log(data);
+              if (data === undefined || data.allMatches === undefined) {
                 return null;
               }
-              return data.allGames.map(game => {
+              // TODO Filter out non active games
+              return data.allMatches.map(match => {
                 return (
-                  <GameListItem
-                    key={game.gameId}
-                    gameInfo={game}
-                    onClick={() => setGameId(1)}
+                  <MatchListItem
+                    key={match.matchId}
+                    match={match}
+                    onClick={() => setGameId(match.currentGame.gameId)}
                   />
                 );
               });
             }}
-          </GameListQuery>
+          </AllMatchesQuery>
         </ul>
         <div className={buttonWrapperCss.toString()}>
           <Button

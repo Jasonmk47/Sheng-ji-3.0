@@ -1,8 +1,10 @@
 const resolverMap = {
-  allUsers: async (args, context) => {
+  allUsers: async (_, context) => {
     return await context
       .any(
-        'SELECT u.userId, u.username FROM account.users u GROUP BY u.userId;',
+        `SELECT u.userId, u.username
+         FROM account.users u
+         GROUP BY u.userId;`,
       )
       .then(data => {
         return Object.keys(data).map(function(key) {
@@ -13,22 +15,46 @@ const resolverMap = {
       })
       .catch(err => console.error('Failed to read all users', err));
   },
-
   user: async (args, context) => {
     return await context
       .one(
-        "SELECT u.userId, u.username, array_agg(m.matchId) AS matches FROM account.users u LEFT JOIN game.matches m ON u.userId = ANY(m.userIds) WHERE u.userId = '" +
-          args.userId +
-          "' GROUP BY u.userId;",
+        `SELECT u.userId, u.username
+          FROM account.users u
+          WHERE u.userId = '${args.userId}'
+          GROUP BY u.userId;`,
       )
       .then(data => {
         return {
           userId: data.userid,
           username: data.username,
-          matches: data.matches,
         };
       })
       .catch(err => console.error('Failed to read users', err));
+  },
+  activeMatches: async (args, context) => {
+    return await context
+      .one(
+        `
+        SELECT * FROM game.matches m
+        WHERE m.matchId IN
+        (SELECT array_agg(m.matchId) AS matches
+          FROM account.users u
+          LEFT JOIN game.matches m
+          ON u.userId = ANY(m.userIds)
+          WHERE u.userId = '${args.userId}' GROUP BY u.userId);`,
+      )
+      .then(data => {
+        console.log(data);
+        return {
+          matches: data.matches,
+        };
+      })
+      .catch(err =>
+        console.error(
+          `Failed to read all matches for user ${args.userId}`,
+          err,
+        ),
+      );
   },
   activeGame: async (args, context) => {
     return await context

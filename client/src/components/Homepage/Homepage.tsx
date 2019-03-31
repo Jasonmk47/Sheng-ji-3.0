@@ -3,7 +3,7 @@ import { css } from 'glamor';
 
 import { AppHeader } from './AppHeader';
 import { CreateGameButton } from './Buttons/CreateGameButton';
-import { GameList } from './GameList';
+import { MatchList } from './MatchList';
 
 export class Homepage extends React.PureComponent {
   public render() {
@@ -11,7 +11,7 @@ export class Homepage extends React.PureComponent {
       <div className={appWrapperCss.toString()}>
         <AppHeader />
         <div className={contentWrapperCss.toString()}>
-          <GameList />
+          <MatchList />
           <CreateGameButton />
         </div>
       </div>
