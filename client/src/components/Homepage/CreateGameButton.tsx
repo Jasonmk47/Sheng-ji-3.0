@@ -2,9 +2,9 @@ import * as React from 'react';
 import { css } from 'glamor';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
-import { Button } from './Button';
-import { GameMatchParams } from '../../../types/routeTypes';
-import { gameRouteCreate } from '../../../constants/routes';
+import { Button } from '../Utilities/Buttons/Button';
+import { GameMatchParams } from '../../types/routeTypes';
+import { gameRouteCreate } from '../../constants/routes';
 
 export const CreateGameButton = React.memo(
   withRouter(({ history }: IProps) => (
