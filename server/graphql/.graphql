@@ -1,4 +1,3 @@
-
 type User {
   userId: ID!
   username: String!
@@ -7,22 +6,36 @@ type User {
 type Match {
   matchId: Int!
   isActive: Boolean!
-  userIds: [ID!]!
-  userLevels: [Int!]!
-  defenderUserIds: [ID!]
+  numPlayers: Int!
   currentGame: Game!
+  allGames: [Game!]!
+  matchInfos: [MatchInfo]!
 }
 
-# Game is user specific
+type MatchInfo {
+  user: User
+  userScore: Int!
+  orderId: Int!
+}
+
 type Game {
   gameId: Int!
   matchId: Int!
   isActive: Boolean!
-  trumpSuit: Int!
+  trumpSuit: Int
   trumpNumber: Int
   startingUserId: ID
-  currentPoints: Int
-  hand: [Int!]!
+  bottomSettingUserId: ID #Frequently equal to starting player but not always
+  bottomCardIds: [Int] #Only visible to player who set the bottom
+  gameInfos: [GameInfo]!
+  playedTricks: [Trick]!
+}
+
+# GameInfo is user specific
+type GameInfo {
+  user: User
+  currentPoints: Int!
+  hand: [Int]! #Only visible to player whose user ID matches
 }
 
 type Trick {
@@ -31,15 +44,19 @@ type Trick {
   orderId: Int!
   startingUserId: ID!
   winningUserId: ID
-  playedCardIds: [Int!]!
-  playType: Int!
+  playType: Int #Enum on client
+  trickInfos: [TrickInfo]!
+}
+
+type TrickInfo {
+  userId: ID!
+  playedCards: [Int!]!
 }
 
 # the schema allows the following query:
 type Query {
-  allUsers(userId: ID!):[User!]
   user(userId: ID!): User
-  game(gameId: Int!, userId: ID!): Game  # why do we need userID?
+  game(gameId: Int!): Game
   match(matchId: Int!, userId: ID!): Match
   trick(trickId: Int!): Trick
   activeGame(matchId: Int!, userId: ID!): Game
@@ -51,7 +68,11 @@ type Query {
 
 # this schema allows the following mutation:
 type Mutation {
-  playCard(userId: ID!, cardId: Int!, gameId: Int!): Game
+  createMatch(userId: ID!): Match #One user creates a game and the others join
+  playCards(userId: ID!, cardIds: [Int!]!, gameId: Int!): Trick
+  callSuit(userId: ID!, gameId: Int!, suitType: Int!): Game
+  flipSuit(userId: ID!, gameId: Int!, suitType: Int!): Game
+  setBottom(userId: ID!, gameId: Int!, cardIds: [Int!]!): Game
 }
 
 schema {

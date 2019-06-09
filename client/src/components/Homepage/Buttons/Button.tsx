@@ -1,6 +1,9 @@
 import * as React from 'react';
 import { css } from 'glamor';
 
+import { colors } from '../../../constants/colors';
+import { fonts } from '../../../constants/fonts';
+
 export const Button = React.memo(({ onClick, text, isDisabled }: IProps) => (
   <div className={buttonWrapperCss.toString()}>
     <button
@@ -33,22 +36,31 @@ const buttonCss = css({
   },
   marginBottom: '20px',
   textDecoration: 'none',
-  border: '1px solid #25729a',
   WebkitBorderRadius: '3px',
   MozBorderRadius: '3px',
   borderRadius: '3px',
-  fontFamily: 'arial, helvetica, sans-serif',
-  padding: '10px 10px 10px 10px',
+  fontFamily: fonts.buttonFont,
+  padding: '10px',
   textShadow: '-1px -1px 0 rgba(0,0,0,0.3)',
   textAlign: 'center',
-  color: '#FFFFFF',
-  backgroundColor: '#3093c7',
-  backgroundImage:
-    '-webkit-gradient(linear, left top, left bottom, color-stop(0%, #3093c7), color-stop(100%, #1c5a85)), -webkit-linear-gradient(top, #3093c7, #1c5a85)',
+  color: colors.white,
+  backgroundColor: colors.buttonColor,
+  backgroundImage: `-webkit-gradient(linear, left top, left bottom, color-stop(0%, ${
+    colors.buttonColor
+  }), color-stop(100%, ${
+    colors.buttonGradient
+  })), -webkit-linear-gradient(top, ${colors.buttonColor}, ${
+    colors.buttonGradient
+  })`,
   ':hover': {
-    border: '1px solid #1c5675',
-    backgroundColor: '#26759e',
-    backgroundImage:
-      '-webkit-gradient(linear, left top, left bottom, color-stop(0%,#26759e), color-stop(100%, #133d5b)), -webkit-linear-gradient(top, #26759e, #133d5b)',
+    border: '1px solid',
+    backgroundColor: colors.buttonHover,
+    backgroundImage: `-webkit-gradient(linear, left top, left bottom, color-stop(0%,${
+      colors.buttonHover
+    }), color-stop(100%, ${
+      colors.buttonHoverGradient
+    })), -webkit-linear-gradient(top, ${colors.buttonHover}, ${
+      colors.buttonHoverGradient
+    })`,
   },
 });

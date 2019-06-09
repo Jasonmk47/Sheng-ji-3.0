@@ -1,4 +1,4 @@
-import { suits } from './enums';
+import { Suits } from './enums';
 
 const Account = {
   __typename: 'Account',
@@ -11,13 +11,13 @@ const Game = {
   // Cards selected will be handled in component state
   display: {
     cardGroupsVisible: [
-      { userId: 1, cardIds: [30, 31], __typename: "CardGroup" },
-      { userId: 2, cardIds: [32, 33], __typename: "CardGroup" },
+      { userId: 1, cardIds: [30, 31], __typename: 'CardGroup' },
+      { userId: 2, cardIds: [32, 33], __typename: 'CardGroup' },
     ],
     __typename: 'Display',
   },
   boardState: {
-    trumpSuit: suits.jokers,
+    trumpSuit: Suits.jokers,
     trumpNumber: -1,
     selfPoints: 0,
     teamPoints: 0,

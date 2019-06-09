@@ -1,4 +1,4 @@
-import { suits, plays } from '../constants/enums';
+import { Suits, PlayTypes } from '../constants/enums';
 import { cardIdToPictureDict } from '../constants/cardIdToPicture';
 import { cardIdToCardNameDict } from '../constants/cardIdToName';
 
@@ -6,20 +6,20 @@ export const getSuitIdFromCardId = (cardId: number) => {
   validateCardId(cardId);
   cardId %= 54;
   if (cardId < 13) {
-    return suits.clubs;
+    return Suits.clubs;
   } else if (cardId < 26) {
-    return suits.diamonds;
+    return Suits.diamonds;
   } else if (cardId < 39) {
-    return suits.hearts;
+    return Suits.hearts;
   } else if (cardId < 52) {
-    return suits.spades;
+    return Suits.spades;
   } else {
-    return suits.jokers;
+    return Suits.jokers;
   }
 };
 
 export const getNumberFromCardId = (cardId: number) => {
-  if (getSuitIdFromCardId(cardId) === suits.jokers) {
+  if (getSuitIdFromCardId(cardId) === Suits.jokers) {
     return cardId % 54;
   }
   // 52, 53
@@ -45,7 +45,7 @@ export const getCardNameFromCardId = (cardId: number) => {
 export const getIsTrumpFromCardId = (cardId: number, gameState: any) => {
   validateCardId(cardId);
   const suit = getSuitIdFromCardId(cardId);
-  if (suit === suits.jokers || suit === gameState.boardState.trumpSuit) {
+  if (suit === Suits.jokers || suit === gameState.boardState.trumpSuit) {
     return true;
   } else {
     return false;
@@ -67,14 +67,14 @@ export const getPlayTypeFromCardIds = (cardIds: number[]) => {
    * Two cards must be paired else shuai
    * Even numered hands could be consecutive pairs
    * Odd numbered hands must be schaui
-  */
+   */
 
   if (numCards === 1) {
-    return plays.single;
+    return PlayTypes.single;
   } else if (numCards === 2) {
     return checkCardsEqual(sortedCardIds[0], sortedCardIds[1])
-      ? plays.pair
-      : plays.shuai;
+      ? PlayTypes.pair
+      : PlayTypes.shuai;
   } else if (numCards % 2 === 0) {
     let prevValue = -1;
     for (let i = 0; i < numCards; i += 2) {
@@ -87,13 +87,13 @@ export const getPlayTypeFromCardIds = (cardIds: number[]) => {
                 getSuitIdFromCardId(prevValue)))
         )
       ) {
-        return plays.shuai;
+        return PlayTypes.shuai;
       }
       prevValue = sortedCardIds[i];
     }
-    return plays.consecutivePair;
+    return PlayTypes.consecutivePair;
   } else {
-    return plays.shuai;
+    return PlayTypes.shuai;
   }
 };
 
@@ -125,7 +125,11 @@ export const isConsecutivePair = (sortedHand: number[]) => {
   ); // consecutive
 };
 
-export const getHigherCard = (cardId1: number, cardId2: number, gameState: any) => {
+export const getHigherCard = (
+  cardId1: number,
+  cardId2: number,
+  gameState: any,
+) => {
   // If only one person played trump
   if (
     getIsTrumpFromCardId(cardId1, gameState) &&
