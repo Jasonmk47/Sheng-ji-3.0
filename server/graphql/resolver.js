@@ -44,7 +44,7 @@ const getGame = async (gameId, context) => {
         bottomCardIds: data[0].bottomcardids,
         gameInfos: data.reduce((agg, datum, i) => {
           return agg.concat({
-            userId: datum.userid,
+            user: getUser(datum.userid, context),
             hand: datum.heldcardids,
             currentPoints: datum.points,
           });

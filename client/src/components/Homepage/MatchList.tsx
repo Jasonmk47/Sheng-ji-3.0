@@ -3,7 +3,7 @@ import { css } from 'glamor';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import gql from 'graphql-tag';
 
-import { Button } from './Buttons/Button';
+import { Button } from '../Utilities/Buttons/Button';
 import { MatchListItem } from './MatchListItem';
 import { gameRouteBase } from '../../constants/routes';
 
