@@ -58,10 +58,12 @@ const getGame = async (gameId, context) => {
 const getMatch = async (matchId, context) => {
   return await context
     .any(
-      `SELECT m.matchId, m.isActive, m.numPlayers, g.isActive, matchInfos
+      `SELECT m.matchId, m.isActive, m.numPlayers, g.isActive, g.gameId, mui.level, mui.orderId, mui.userId
       FROM game.matches m
       JOIN game.games g
         ON m.matchId = g.matchId
+      JOIN game.matchUserInfos mui
+        ON mui.matchId = m.matchId
       WHERE m.matchId = ${matchId}`,
     )
     .then(data => {
@@ -72,9 +74,15 @@ const getMatch = async (matchId, context) => {
         matchId: data[0].matchid,
         isActive: data[0].isactive,
         numPlayers: data[0].numplayers,
-        currentGame: data.find(d => d.isActive).gameId,
-        allGames: [],
-        matchInfos: [],
+        currentGame: getGame(data.find(d => d.isactive).gameid, context),
+        allGames: data.map(d => getGame(d.gameid, context)),
+        matchInfos: data.map(d => {
+          return {
+            userScore: d.level,
+            orderId: d.orderid,
+            user: getUser(d.userid, context),
+          };
+        }),
       };
     })
     .catch(err => console.error('Failed to read matches', err));
@@ -148,12 +156,16 @@ const resolverMap = {
   allGames: async (args, context) => {
     return await context
       .any(
-        `SELECT * from game.games g JOIN game.gameUserInfos gui ON g.gameId = gui.gameId WHERE gui.userId = '${
-          args.userId
-        }'`,
+        `SELECT g.gameId, MIN(g.matchId), BOOL_OR(g.isActive), MIN(g.trumpSuit), MIN(g.trumpNumber), g.startingUserId
+        FROM game.games g
+        JOIN game.gameUserInfos gui
+          ON g.gameId = gui.gameId
+        GROUP BY g,gameId, g.startingUserId`, // Add to groupby since starting no agg functions for UUID
       )
       .then(data => {
-        return data.map(game => {
+        var userData = data.filter(d => d.userId === args.userId);
+        console.log(data);
+        return userData.map(game => {
           return {
             gameId: game.gameid,
             matchId: game.matchid,
@@ -161,8 +173,16 @@ const resolverMap = {
             trumpSuit: game.trumpsuit,
             trumpNumber: game.trumpnumber,
             startingUserId: game.startinguserid,
-            currentPoints: game.currentpoints,
-            hand: game.heldcardids,
+            bottomSettingUserId: game.bottomsettinguserid,
+            bottomCardIds: game.bottomcardids,
+            gameInfos: [
+              {
+                user: getUser(game.userid, context),
+                currentPoints: game.points,
+                hand: game.heldcardids,
+              },
+            ],
+            playedTricks: [],
           };
         });
       });
