@@ -1,0 +1,110 @@
+
+user(userId: "11111111-1111-1111-1111-111111111111") {
+    userId,
+    username
+}
+
+ game(gameId: 1, userId: "11111111-1111-1111-1111-111111111111") {
+  gameId,
+  matchId,
+  isActive,
+  trumpSuit,
+  trumpNumber,
+  startingUserId,
+  bottomSettingUserId,
+  bottomCardIds,
+  gameInfos {
+		user {
+      userId
+      username
+    }
+    currentPoints,
+    hand
+  }
+	playedTricks {
+    trickId,
+    gameId,
+    orderId,
+    startingUserId,
+    winningUserId,
+    playType,
+    trickInfos{
+      userId,
+      playedCards
+    }
+	} 
+}
+
+
+  match(matchId: 1, userId: "11111111-1111-1111-1111-111111111111") {
+    matchId,
+    isActive,
+    numPlayers,
+    currentGame{
+      gameId
+    }
+    allGames{
+      gameId
+    }
+    matchInfos{
+     user{
+      userId
+      } 
+      userScore,
+      orderId
+    }
+  }
+}
+
+  activeMatches(userId: "11111111-1111-1111-1111-111111111111") {
+    matchId,
+    isActive,
+    numPlayers,
+    currentGame{
+      gameId
+    }
+    allGames{
+      gameId,
+      isActive
+    }
+    matchInfos{
+     user{
+      userId
+      } 
+      userScore,
+      orderId
+    }
+  }
+
+
+
+  activeGames(userId: "11111111-1111-1111-1111-111111111111") {
+  gameId,
+  matchId,
+  isActive,
+  trumpSuit,
+  trumpNumber,
+  startingUserId,
+  bottomSettingUserId,
+  bottomCardIds,
+  gameInfos {
+		user {
+      userId
+      username
+    }
+    currentPoints,
+    hand
+  }
+	playedTricks {
+    trickId,
+    gameId,
+    orderId,
+    startingUserId,
+    winningUserId,
+    playType,
+    trickInfos{
+      userId,
+      playedCards
+    }
+	} 
+  }

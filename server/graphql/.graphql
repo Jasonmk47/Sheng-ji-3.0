@@ -7,7 +7,7 @@ type Match {
   matchId: Int!
   isActive: Boolean!
   numPlayers: Int!
-  currentGame: Game!
+  currentGame: Game
   allGames: [Game!]!
   matchInfos: [MatchInfo]!
 }
@@ -56,14 +56,12 @@ type TrickInfo {
 # the schema allows the following query:
 type Query {
   user(userId: ID!): User
-  game(gameId: Int!): Game
+  game(gameId: Int!, userId: ID!): Game
   match(matchId: Int!, userId: ID!): Match
   trick(trickId: Int!): Trick
-  activeGame(matchId: Int!, userId: ID!): Game
   activeMatches(userId: ID!): [Match!]!
-  allGames(userId: ID!): [Game!]
+  activeGames(userId: ID!): [Game!]
   allMatches(userId: ID!): [Match!]
-  allMatchGames(matchId: Int!, userId: ID!): [Game!]
 }
 
 # this schema allows the following mutation:
