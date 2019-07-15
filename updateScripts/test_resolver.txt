@@ -95,10 +95,14 @@ user(userId: "11111111-1111-1111-1111-111111111111") {
     currentPoints,
     hand
   }
-	playedTricks {
+
+
+
+
+  
+	trick(trickId: 1) {
     trickId,
     gameId,
-    orderId,
     startingUserId,
     winningUserId,
     playType,
@@ -106,5 +110,4 @@ user(userId: "11111111-1111-1111-1111-111111111111") {
       userId,
       playedCards
     }
-	} 
   }

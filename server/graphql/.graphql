@@ -41,7 +41,7 @@ type GameInfo {
 type Trick {
   trickId: Int!
   gameId: Int!
-  orderId: Int!
+  #orderId: Int! Removing in favor of just assuming assending order of trick id
   startingUserId: ID!
   winningUserId: ID
   playType: Int #Enum on client

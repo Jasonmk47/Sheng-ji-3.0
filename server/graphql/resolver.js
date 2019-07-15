@@ -20,6 +20,18 @@ const getUser = async (userId, context) => {
 };
 
 const getGame = async (gameId, userId, context) => {
+  var tricks = await context
+    .any(`SELECT trickId FROM game.tricks WHERE gameId = ${gameId}`)
+    .then(data => {
+      if (data === undefined || data === null) {
+        return [];
+      }
+      return data;
+    })
+    .catch(err => console.error('Failed to read tricks from games', err));
+
+  Promise.resolve(tricks);
+
   return await context
     .any(
       `SELECT
@@ -43,7 +55,6 @@ const getGame = async (gameId, userId, context) => {
       if (data === undefined || data === null) {
         throw new Error('No data returned for game query');
       }
-      if (data.length === 0) console.log(gameId);
       return {
         gameId: data[0].gameid,
         matchId: data[0].matchid,
@@ -61,7 +72,7 @@ const getGame = async (gameId, userId, context) => {
             currentPoints: datum.points,
           });
         }, []),
-        playedTricks: [],
+        playedTricks: tricks.map(t => getTrick(t.trickid, context)),
       };
     })
     .catch(err => console.error('Failed to read games', err));
@@ -115,6 +126,42 @@ const getMatch = async (matchId, userId, context) => {
     .catch(err => console.error('Failed to read matches', err));
 };
 
+const getTrick = async (trickId, context) => {
+  return await context
+    .any(
+      `SELECT t.trickId
+        , t.gameId
+        , t.startingUserId
+        , t.winningUserId
+        , tui.trickType
+        , tui.userId
+        , tui.playedCards
+        FROM game.tricks t
+        JOIN game.trickUserInfos tui
+          ON t.trickId = tui.trickId
+        WHERE t.trickId = ${trickId};`,
+    )
+    .then(data => {
+      if (data === undefined || data === null) {
+        throw new Error('No data returned for game query');
+      }
+      return {
+        trickId: data[0].trickid,
+        gameId: data[0].gameid,
+        startingUserId: data[0].startinguserid,
+        winningUserId: data[0].winninguserid,
+        playType: data[0].tricktype,
+        trickInfos: data.map(d => {
+          return {
+            userId: d.userid,
+            playedCards: d.playedcards,
+          };
+        }),
+      };
+    })
+    .catch(err => console.error(`Failed to read tricks for ${trickId}`, err));
+};
+
 const getMatchIdsForUserId = async (userId, context) => {
   return await context
     .any(
@@ -166,6 +213,9 @@ const resolverMap = {
   match: async (args, context) => {
     return await getMatch(args.matchId, args.userId, context);
   },
+  trick: async (args, context) => {
+    return await getTrick(args.trickId, context);
+  },
   activeMatches: async (args, context) => {
     const matches = await getMatchIdsForUserId(args.userId, context);
     const activeMatchIds = matches.filter(m => m.isActive).map(m => m.matchId);
@@ -180,7 +230,13 @@ const resolverMap = {
       .filter(g => g.isActive)
       .map(g => getGame(g.gameId, args.userId, context));
   },
-  allMatches: async (userId, context) => {},
+  allMatches: async (args, context) => {
+    var matchIds = await getMatchIdsForUserId(args.userId, context);
+
+    return matchIds
+      .filter(m => m.isactive)
+      .map(m => getMatch(m.matchid), context);
+  },
 };
 
 module.exports = resolverMap;

@@ -100,13 +100,21 @@ CREATE TABLE IF NOT EXISTS game.matchUserInfos (
     FOREIGN KEY (userId) REFERENCES account.users (userId) ON DELETE RESTRICT
 );
 
+CREATE TABLE IF NOT EXISTS game.trickTypes (
+    id INT NOT NULL,
+    name VARCHAR(64) NOT NULL,
+    PRIMARY KEY (id)
+);
+
 CREATE TABLE IF NOT EXISTS game.trickUserInfos (
     trickId INT NOT NULL,
     userId UUID NOT NULL,
     playedCards INT[] NULL,
+    trickType INT NOT NULL,
     PRIMARY KEY (trickId, userId),
     FOREIGN KEY (trickId) REFERENCES game.tricks (trickId) ON DELETE RESTRICT,
-    FOREIGN KEY (userId) REFERENCES account.users (userId) ON DELETE RESTRICT
+    FOREIGN KEY (userId) REFERENCES account.users (userId) ON DELETE RESTRICT,
+    FOREIGN KEY (trickType) REFERENCES game.trickTypes (id) ON DELETE RESTRICT
 );
 
 COMMIT;

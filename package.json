@@ -17,28 +17,28 @@
     "format": "prettier --trailing-comma es5 --single-quote --write 'packages/*/*.js' 'packages/*/!(node_modules)/**/*.js'"
   },
   "dependencies": {
-    "dotenv": "^6.0.0",
-    "express": "^4.16.3",
+    "dotenv": "^6.2.0",
+    "express": "^4.17.1",
     "express-graphql": "^0.6.12",
     "glamor": "^2.20.40",
     "graphql": "^0.13.2",
-    "lodash": "^4.17.10",
-    "nodemon": "^1.18.7",
-    "pg": "^7.7.1",
-    "pg-promise": "^8.5.3",
-    "popmotion": "^8.5.3",
-    "prettier": "^1.15.3"
+    "lodash": "^4.17.14",
+    "nodemon": "^1.19.1",
+    "pg": "^7.11.0",
+    "pg-promise": "^8.7.4",
+    "popmotion": "^8.7.0",
+    "prettier": "^1.18.2"
   },
   "devDependencies": {
-    "@types/graphql": "^14.0.3",
+    "@types/graphql": "^14.2.2",
     "babel-eslint": "^9.0.0",
     "concurrently": "^3.6.0",
-    "eslint": "^5.9.0",
-    "eslint-config-react-app": "^3.0.5",
+    "eslint": "^5.16.0",
+    "eslint-config-react-app": "^3.0.8",
     "eslint-plugin-flowtype": "^2.50.3",
-    "eslint-plugin-import": "^2.14.0",
-    "eslint-plugin-jsx-a11y": "^6.1.2",
-    "eslint-plugin-react": "^7.11.1"
+    "eslint-plugin-import": "^2.18.0",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.14.2"
   },
   "repository": {
     "type": "git",
