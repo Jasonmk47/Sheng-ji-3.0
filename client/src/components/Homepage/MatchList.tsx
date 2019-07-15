@@ -1,34 +1,23 @@
 import * as React from 'react';
 import { css } from 'glamor';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
-import gql from 'graphql-tag';
 
 import { Button } from '../Utilities/Buttons/Button';
 import { MatchListItem } from './MatchListItem';
 import { gameRouteBase } from '../../constants/routes';
 
 import { AllMatchesQuery } from '../../types/queryTypes';
-
-const GET_CARD_IDS_IN_HAND = gql`
-  query($userId: ID!) {
-    allGames(userId: $userId) {
-      gameId
-      isActive
-      currentPoints
-    }
-  }
-`;
+import { GET_ALL_MATCHES } from '../../services/resolvers/queries';
 
 export const MatchList = React.memo(
   withRouter(({ history }: IProps) => {
     const [selectedGameId, setGameId] = React.useState();
 
-    // Replace line 17 with real DB query
     return (
       <div className={wrapperCss.toString()}>
         <ul className={listCss.toString()}>
           <AllMatchesQuery
-            query={GET_CARD_IDS_IN_HAND}
+            query={GET_ALL_MATCHES}
             variables={{ userId: '11111111-1111-1111-1111-111111111111' }}
           >
             {({ loading, error, data }) => {

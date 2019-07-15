@@ -1,25 +1,10 @@
 import * as React from 'react';
 import { css } from 'glamor';
-import gql from 'graphql-tag';
 
 import Card from './Card';
 import { ActiveGameQuery } from '../../types/queryTypes';
 import { assertHasValue } from 'src/services/Throw';
-
-const GET_CARD_IDS_IN_HAND = gql`
-  query($matchId: Int!, $userId: ID!) {
-    activeGame(matchId: $matchId, userId: $userId) {
-      gameId
-      matchId
-      isActive
-      trumpSuit
-      trumpNumber
-      startingUserId
-      currentPoints
-      hand
-    }
-  }
-`;
+import { GET_ACTIVE_GAMES } from 'src/services/resolvers/queries';
 
 class Hand extends React.PureComponent {
   render() {
@@ -28,9 +13,8 @@ class Hand extends React.PureComponent {
     return (
       <div className={'my-hand' + handStyle.toString()}>
         <ActiveGameQuery
-          query={GET_CARD_IDS_IN_HAND}
+          query={GET_ACTIVE_GAMES}
           variables={{
-            matchId: 2,
             userId: currentUserId,
           }}
         >
@@ -46,7 +30,7 @@ class Hand extends React.PureComponent {
               return;
             }
             return assertHasValue(
-              data.activeGame.gameInfos.find(
+              data.activeGames[0].gameInfos.find(
                 gi => gi.user.userId === currentUserId,
               ),
               'Active game does not include current user',

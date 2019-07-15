@@ -232,10 +232,9 @@ const resolverMap = {
   },
   allMatches: async (args, context) => {
     var matchIds = await getMatchIdsForUserId(args.userId, context);
-
     return matchIds
-      .filter(m => m.isactive)
-      .map(m => getMatch(m.matchid), context);
+      .filter(m => m.isActive)
+      .map(m => getMatch(m.matchId, args.userId, context));
   },
 };
 
