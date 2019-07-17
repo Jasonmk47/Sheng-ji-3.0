@@ -59,6 +59,7 @@ export const GET_MATCH = gql`
       matchInfos {
         user {
           userId
+          username
         }
         userScore
         orderId
@@ -146,6 +147,7 @@ export const GET_ALL_MATCHES = gql`
       matchInfos {
         user {
           userId
+          username
         }
         userScore
         orderId

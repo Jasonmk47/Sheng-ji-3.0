@@ -49,6 +49,7 @@ user(userId: "11111111-1111-1111-1111-111111111111") {
     matchInfos{
      user{
       userId
+      username
       } 
       userScore,
       orderId
@@ -128,6 +129,7 @@ allMatches(userId:"11111111-1111-1111-1111-111111111111" ) {
   matchInfos{
     user{
     userId
+    username
     } 
     userScore,
     orderId
