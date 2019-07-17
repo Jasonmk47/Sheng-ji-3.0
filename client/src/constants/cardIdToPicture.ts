@@ -1,7 +1,9 @@
+import { CardNameMap } from '../types/cardTypes';
+
 // Generated with the generateCardMappings.py script
 // If you have more decks, just mod 54 to figure out which to use
 // -1 is for a card back
-export const cardIdToPictureDict = {
+export const cardIdToPictureDict: CardNameMap = {
   '-1': require('./cards/bicycle_back.png'),
   0: require('./cards/2_of_clubs.png'),
   1: require('./cards/3_of_clubs.png'),

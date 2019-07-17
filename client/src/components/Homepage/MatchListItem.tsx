@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { css } from 'glamor';
-import { Match } from 'src/types/graphqlTypes';
-import { assertHasValue } from 'src/services/Throw';
+import { Match } from '../../types/graphqlTypes';
+import { assertHasValue } from '../../services/Throw';
 
 export const MatchListItem = React.memo(({ match, onClick }: IProps) => {
   const { isActive, numPlayers, matchInfos, matchId } = match;

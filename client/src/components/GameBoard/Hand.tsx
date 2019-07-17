@@ -3,8 +3,8 @@ import { css } from 'glamor';
 
 import Card from './Card';
 import { ActiveGameQuery } from '../../types/queryTypes';
-import { assertHasValue } from 'src/services/Throw';
-import { GET_ACTIVE_GAMES } from 'src/services/resolvers/queries';
+import { assertHasValue } from '../../services/Throw';
+import { GET_ACTIVE_GAMES } from '../../services/resolvers/queries';
 
 class Hand extends React.PureComponent {
   render() {

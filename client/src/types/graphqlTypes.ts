@@ -1,4 +1,4 @@
-import { Suits, PlayTypes } from 'src/constants/enums';
+import { Suits, PlayTypes } from '../constants/enums';
 
 //  Keep in line with .graphql
 export interface User {

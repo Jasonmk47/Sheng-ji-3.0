@@ -1,11 +1,14 @@
 import { css } from 'glamor';
 import * as React from 'react';
 
-import { getPictureUrlFromCardId, getCardNameFromCardId } from '../../services/cardHelpers';
+import {
+  getPictureUrlFromCardId,
+  getCardNameFromCardId,
+} from '../../services/cardHelpers';
 
 class Card extends React.PureComponent<IProps, IState> {
-  state = { 
-    isSelected: false
+  state = {
+    isSelected: false,
   };
 
   render() {
@@ -22,11 +25,11 @@ class Card extends React.PureComponent<IProps, IState> {
 }
 
 interface IProps {
-  cardId: number
+  cardId: number;
 }
 
 interface IState {
-  isSelected: boolean
+  isSelected: boolean;
 }
 
 const cardStyle = css({
