@@ -18,7 +18,7 @@ export interface Match {
 export interface MatchInfo {
   user: User;
   userScore: number;
-  orderId: number
+  orderId: number;
 }
 
 export interface Game {
@@ -43,7 +43,7 @@ export interface GameInfo {
 export interface Trick {
   trickId: number;
   gameId: number;
-  orderId: number;
+  // orderId: number;
   startingUserId: string;
   winningUserId: string;
   playType: PlayTypes;
