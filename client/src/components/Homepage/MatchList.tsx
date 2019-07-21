@@ -3,6 +3,7 @@ import { css } from 'glamor';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 import { Button } from '../Utilities/Buttons/Button';
+import { CreateGameButton } from './CreateGameButton';
 import { MatchListItem } from './MatchListItem';
 import { gameRouteBase } from '../../constants/routes';
 
@@ -54,6 +55,7 @@ export const MatchList = React.memo(
               selectedMatchId && history.push(gameRouteBase + selectedMatchId);
             }}
           />
+          <CreateGameButton />
         </div>
       </div>
     );
@@ -62,7 +64,7 @@ export const MatchList = React.memo(
 
 interface IProps extends RouteComponentProps<{}> {}
 
-const listCss = css({ listStyle: 'none', padding: '1rem' });
+const listCss = css({ listStyle: 'none', padding: '1rem', width: '300px' });
 
 const wrapperCss = css({ flex: '1 1 auto' });
 

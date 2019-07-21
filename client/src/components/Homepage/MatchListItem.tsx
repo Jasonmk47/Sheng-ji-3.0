@@ -58,6 +58,12 @@ interface IProps {
   isSelected: boolean;
 }
 
-const listItemCss = css({ marginTop: '5px' });
+const listItemCss = css({
+  marginTop: '5px',
+  cursor: 'pointer',
+  border: 'solid',
+  borderRadius: '8px',
+  padding: '5px',
+});
 
-const selectedCss = css({ color: 'red' });
+const selectedCss = css({ color: 'red', cursor: 'context-menu' });

@@ -2,7 +2,6 @@ import * as React from 'react';
 import { css } from 'glamor';
 
 import { AppHeader } from './AppHeader';
-import { CreateGameButton } from './CreateGameButton';
 import { MatchList } from './MatchList';
 
 export class Homepage extends React.PureComponent {
@@ -12,7 +11,6 @@ export class Homepage extends React.PureComponent {
         <AppHeader />
         <div className={contentWrapperCss.toString()}>
           <MatchList />
-          <CreateGameButton />
         </div>
       </div>
     );
