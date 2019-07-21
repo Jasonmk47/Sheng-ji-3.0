@@ -5,6 +5,7 @@ type User {
 
 type Match {
   matchId: Int!
+  matchName: String!
   isActive: Boolean!
   numPlayers: Int!
   currentGame: Game

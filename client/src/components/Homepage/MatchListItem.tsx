@@ -5,7 +5,7 @@ import { assertHasValue } from '../../services/Throw';
 
 export const MatchListItem = React.memo(
   ({ match, onClick, isSelected }: IProps) => {
-    const { numPlayers, matchInfos, matchId } = match;
+    const { numPlayers, matchInfos, matchName } = match;
 
     const sortedMatchInfos = matchInfos.sort((a, b) => a.orderId - b.orderId);
 
@@ -37,7 +37,7 @@ export const MatchListItem = React.memo(
         onClick={onClick}
       >
         <div>
-          <div>Match Id: {matchId}</div>
+          <div>Match Name: {matchName}</div>
           <span>Players: </span>
           {matchInfos
             .sort((a, b) => a.orderId - b.orderId)

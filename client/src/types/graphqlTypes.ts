@@ -8,6 +8,7 @@ export interface User {
 
 export interface Match {
   matchId: number;
+  matchName: string;
   isActive: boolean;
   numPlayers: number;
   currentGame: Game;
