@@ -30,6 +30,21 @@ export const Modal = React.memo(() => (
               shouldCloseOnOverlayClick={true}
               style={modalCss}
             >
+              <h2>
+                {
+                  {
+                    [ModalType.none]: <span>Weird</span>,
+                    [ModalType.createGame]: <span>Create Game</span>,
+                  }[data.modal.type]
+                }
+              </h2>
+              <hr />
+              <button
+                className={closeCss.toString()}
+                onClick={() =>
+                  toggleModal({ variables: { type: ModalType.none } })
+                }
+              />
               {
                 {
                   [ModalType.none]: (
@@ -40,8 +55,8 @@ export const Modal = React.memo(() => (
                   ),
                   [ModalType.createGame]: (
                     <CreateGameModal
-                      toggleModal={(type: ModalType) =>
-                        toggleModal({ variables: { type: type } })
+                      toggleModal={() =>
+                        toggleModal({ variables: { type: ModalType.none } })
                       }
                     />
                   ),
@@ -55,4 +70,38 @@ export const Modal = React.memo(() => (
   </ModalQuery>
 ));
 
-const modalCss = css({ width: '100px' });
+const modalCss = { content: { width: '50%', left: '25%', minWidth: '250px' } };
+
+// Styles inspired by https://codepen.io/brissmyr/pen/egidw
+const closeCss = css({
+  position: 'absolute',
+  right: '32px',
+  top: '32px',
+  width: '32px',
+  height: '32px',
+  opacity: 0.3,
+  '&:hover': {
+    opacity: 1,
+    cursor: 'pointer',
+  },
+  '&:before': {
+    position: 'absolute',
+    left: '12px',
+    top: '-2px',
+    content: ' ',
+    height: '33px',
+    width: '4px',
+    backgroundColor: '#333',
+    transform: 'rotate(45deg)',
+  },
+  '&:after': {
+    position: 'absolute',
+    left: '12px',
+    top: '-2px',
+    content: ' ',
+    height: '33px',
+    width: '4px',
+    backgroundColor: '#333',
+    transform: 'rotate(-45deg)',
+  },
+});

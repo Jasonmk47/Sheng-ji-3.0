@@ -15,12 +15,14 @@ class Root extends React.PureComponent<IProps> {
     return (
       <ApolloProvider client={apolloClient}>
         <Router>
-          <Switch>
-            <Route path={gameRouteFull} component={GameBoard} />
-            <Route path="/:filter?" component={Homepage} />
-          </Switch>
+          <>
+            <Switch>
+              <Route path={gameRouteFull} component={GameBoard} />
+              <Route path="/:filter?" component={Homepage} />
+            </Switch>
+            <Modal />
+          </>
         </Router>
-        <Modal />
       </ApolloProvider>
     );
   }
