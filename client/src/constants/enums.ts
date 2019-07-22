@@ -13,3 +13,8 @@ export enum Suits {
   spades,
   jokers,
 }
+
+export enum ModalType {
+  none = 0,
+  createGame,
+}

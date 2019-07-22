@@ -8,7 +8,7 @@ import { MatchListItem } from './MatchListItem';
 import { gameRouteBase } from '../../constants/routes';
 
 import { AllMatchesQuery } from '../../types/queryTypes';
-import { GET_ALL_MATCHES } from '../../services/resolvers/queries';
+import { GET_ALL_MATCHES } from '../../services/graphqlServices/queries';
 
 export const MatchList = React.memo(
   withRouter(({ history }: IProps) => {
