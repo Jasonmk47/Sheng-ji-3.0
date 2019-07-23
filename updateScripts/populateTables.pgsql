@@ -12,11 +12,12 @@ SELECT * FROM account.users;
 
 INSERT INTO game.matches (
     matchid,
+    matchName,
     numPlayers,
     isActive
 )
-VALUES (1, 4, true),
-(2, 4, true);
+VALUES (1, 'Wilson', 4, true),
+(2, 'Butler', 4, true);
 
 SELECT * FROM game.matches;
 

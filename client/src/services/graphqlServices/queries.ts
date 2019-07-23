@@ -48,6 +48,7 @@ export const GET_MATCH = gql`
   query($matchId: number, $userId: ID!) {
     match(matchId: $matchId, userId: $userId) {
       matchId
+      matchName
       isActive
       numPlayers
       currentGame {
@@ -72,6 +73,7 @@ export const GET_ACTIVE_MATCHES = gql`
   query($userId: ID!) {
     activeMatches(userId: $userId) {
       matchId
+      matchName
       isActive
       numPlayers
       currentGame {
@@ -97,6 +99,7 @@ export const GET_ACTIVE_GAMES = gql`
     activeGames(userId: $userId) {
       gameId
       matchId
+      matchName
       isActive
       trumpSuit
       trumpNumber
@@ -135,6 +138,7 @@ export const GET_ALL_MATCHES = gql`
   query($userId: ID!) {
     allMatches(userId: $userId) {
       matchId
+      matchName
       isActive
       numPlayers
       currentGame {

@@ -83,6 +83,7 @@ const getMatch = async (matchId, userId, context) => {
     .any(
       `SELECT
         m.matchId
+        , m.matchName
         , m.isActive AS matchIsActive
         , m.numPlayers
         , g.isActive AS gameIsActive
@@ -108,6 +109,7 @@ const getMatch = async (matchId, userId, context) => {
 
       return {
         matchId: data[0].matchid,
+        matchName: data[0].matchname,
         isActive: data[0].matchisactive,
         numPlayers: data[0].numplayers,
         currentGame: allGames.find(g => g.isActive),

@@ -30,6 +30,7 @@ EXECUTE PROCEDURE trigger_set_timestamp();
 
 CREATE TABLE IF NOT EXISTS game.matches (
     matchId INT NOT NULL,
+    matchName VARCHAR(64) NOT NULL,
     isActive BOOL NOT NULL,
     numPlayers INT NOT NULL,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
