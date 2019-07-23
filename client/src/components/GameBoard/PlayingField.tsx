@@ -3,7 +3,7 @@ import gql from 'graphql-tag';
 
 import Card from './Card';
 import { CardGroup } from '../../types/cardTypes';
-import { FieldQuery } from '../../types/clientGraphqlTypes';
+import { FieldQuery } from '../../types/localQueryTypes';
 
 const GET_CARD_IDS_ON_FIELD = gql`
   query {

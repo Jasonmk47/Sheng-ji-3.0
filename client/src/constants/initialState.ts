@@ -1,11 +1,11 @@
-import { Suits } from './enums';
+import { Suits, ModalType } from './enums';
 
 const Account = {
   __typename: 'Account',
   userId: null,
 };
 
-// These fields will have to be initialized on game load
+// TODO remove this for the remote one instaed
 const Game = {
   currentGameId: -1,
   // Cards selected will be handled in component state
@@ -27,4 +27,10 @@ const Game = {
   __typename: 'Game',
 };
 
-export default { account: Account, game: Game };
+const Modal = {
+  isOpen: true,
+  type: ModalType.createGame,
+  __typename: 'Modal',
+};
+
+export default { account: Account, game: Game, modal: Modal };

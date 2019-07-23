@@ -7,6 +7,7 @@ import { NormalizedCacheObject } from 'apollo-cache-inmemory';
 import { Homepage } from './Homepage/Homepage';
 import GameBoard from './GameBoard/GameBoard';
 import { gameRouteFull } from '../constants/routes';
+import { Modal } from './Utilities/Modal/Modal';
 
 class Root extends React.PureComponent<IProps> {
   render() {
@@ -14,10 +15,13 @@ class Root extends React.PureComponent<IProps> {
     return (
       <ApolloProvider client={apolloClient}>
         <Router>
-          <Switch>
-            <Route path={gameRouteFull} component={GameBoard} />
-            <Route path="/:filter?" component={Homepage} />
-          </Switch>
+          <>
+            <Switch>
+              <Route path={gameRouteFull} component={GameBoard} />
+              <Route path="/:filter?" component={Homepage} />
+            </Switch>
+            <Modal />
+          </>
         </Router>
       </ApolloProvider>
     );

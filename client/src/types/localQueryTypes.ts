@@ -1,5 +1,6 @@
 import { Query } from 'react-apollo';
 import { CardGroup } from './cardTypes';
+import { ModalType } from '../constants/enums';
 
 interface FieldData {
   game: {
@@ -10,3 +11,12 @@ interface FieldData {
 }
 
 export class FieldQuery extends Query<FieldData> {}
+
+export interface ModalData {
+  modal: {
+    isOpen: boolean;
+    type: ModalType;
+  };
+}
+
+export class ModalQuery extends Query<ModalData> {}

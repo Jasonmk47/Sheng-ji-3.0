@@ -13,3 +13,14 @@ export enum Suits {
   spades,
   jokers,
 }
+
+export enum ModalType {
+  none = 0,
+  createGame,
+}
+
+// First value is default
+export const SupportedNumPlayers = [4, 5];
+
+// First value is default
+export const SupportedNumDecks = [2, 1];
