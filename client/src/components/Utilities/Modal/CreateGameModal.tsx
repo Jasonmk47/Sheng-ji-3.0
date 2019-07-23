@@ -3,11 +3,10 @@ import { css } from 'glamor';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 import { GameMatchParams } from '../../../types/routeTypes';
-import {
-  SupportedNumPlayers,
-  SupportedNumDecks,
-} from '../../../constants/enums';
+import { SupportedNumPlayers, SupportedNumDecks } from 'constants/enums';
+import { Button } from '../Buttons/Button';
 import { gameRouteBase } from 'constants/routes';
+import { fonts } from 'constants/fonts';
 
 export const CreateGameModal = React.memo(
   withRouter(({ history, toggleModal }: IProps) => {
@@ -16,7 +15,7 @@ export const CreateGameModal = React.memo(
     return (
       <div className={contentsCss.toString()}>
         <div className={modalSectionCss.toString()}>
-          <span>Number of Players</span>
+          <h3>Number of Players</h3>
           <div className={optionsListCss.toString()}>
             {SupportedNumPlayers.map(p => (
               <div
@@ -33,7 +32,7 @@ export const CreateGameModal = React.memo(
           </div>
         </div>
         <div className={modalSectionCss.toString()}>
-          <span>Number of Decks</span>
+          <h3>Number of Decks</h3>
           <div className={optionsListCss.toString()}>
             {SupportedNumDecks.map(d => (
               <div
@@ -50,14 +49,13 @@ export const CreateGameModal = React.memo(
           </div>
         </div>
 
-        <button
+        <Button
           onClick={() => {
             toggleModal();
             history.push(gameRouteBase);
           }}
-        >
-          Start
-        </button>
+          text={'Start'}
+        />
       </div>
     );
   }),
@@ -70,18 +68,27 @@ interface IProps extends RouteComponentProps<GameMatchParams> {
 const contentsCss = css({
   display: 'flex',
   flexDirection: 'column',
-  textAlign: 'center',
+  justifyContent: 'center',
+  alignItems: 'center',
 });
 
-const modalSectionCss = css({ margin: '15px' });
+const modalSectionCss = css({
+  display: 'flex',
+  flexDirection: 'column',
+  margin: '15px',
+  justifyContent: 'center',
+  alignItems: 'center',
+});
 
 const optionsListCss = css({ display: 'flex' });
 
 const optionCss = css({
   marginTop: '5px',
   border: 'solid',
-  padding: '5px',
+  padding: '5px 15px 5px 15px',
   cursor: 'pointer',
+  fontSize: '2em',
+  fontFamily: fonts.buttonFont.toString(),
 });
 
 const selectedOptionCss = css({ color: 'red', cursor: 'context-menu' });

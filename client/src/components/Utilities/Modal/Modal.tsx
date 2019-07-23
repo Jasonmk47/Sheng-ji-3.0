@@ -70,7 +70,7 @@ export const Modal = React.memo(() => (
   </ModalQuery>
 ));
 
-const modalCss = { content: { width: '50%', left: '25%', minWidth: '250px' } };
+const modalCss = { content: { width: '40%', left: '30%', minWidth: '250px' } };
 
 // Styles inspired by https://codepen.io/brissmyr/pen/egidw
 const closeCss = css({
