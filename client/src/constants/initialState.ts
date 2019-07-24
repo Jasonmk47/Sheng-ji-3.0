@@ -28,8 +28,8 @@ const Game = {
 };
 
 const Modal = {
-  isOpen: true,
-  type: ModalType.createGame,
+  isOpen: false,
+  type: ModalType.none,
   __typename: 'Modal',
 };
 

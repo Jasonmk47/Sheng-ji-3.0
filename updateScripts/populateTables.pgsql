@@ -11,13 +11,13 @@ VALUES ('11111111-1111-1111-1111-111111111111', 'Jason', 'salt1', 'salted and ha
 SELECT * FROM account.users;
 
 INSERT INTO game.matches (
-    matchid,
     matchName,
     numPlayers,
+    numDecks,
     isActive
 )
-VALUES (1, 'Wilson', 4, true),
-(2, 'Butler', 4, true);
+VALUES ('Wilson', 4, 2, true),
+('Butler', 4, 2, true);
 
 SELECT * FROM game.matches;
 

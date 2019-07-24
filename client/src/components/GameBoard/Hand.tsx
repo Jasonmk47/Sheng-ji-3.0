@@ -11,7 +11,7 @@ class Hand extends React.PureComponent {
     // TODO real user Id
     const currentUserId = '11111111-1111-1111-1111-111111111111';
     return (
-      <div className={'my-hand' + handStyle.toString()}>
+      <div className={'my-hand ' + handStyle.toString()}>
         <ActiveGameQuery
           query={GET_ACTIVE_GAMES}
           variables={{
