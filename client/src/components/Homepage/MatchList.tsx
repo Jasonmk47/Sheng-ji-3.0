@@ -2,8 +2,6 @@ import * as React from 'react';
 import { css } from 'glamor';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
-import { Button } from '../Utilities/Buttons/Button';
-import { CreateGameButton } from './CreateGameButton';
 import { MatchListItem } from './MatchListItem';
 import { gameRouteBase } from '../../constants/routes';
 
@@ -12,8 +10,6 @@ import { GET_ALL_MATCHES } from '../../services/graphqlServices/queries';
 
 export const MatchList = React.memo(
   withRouter(({ history }: IProps) => {
-    const [selectedMatchId, setMatchId] = React.useState();
-
     return (
       <div className={wrapperCss.toString()}>
         <ul className={listCss.toString()}>
@@ -38,25 +34,16 @@ export const MatchList = React.memo(
                     <MatchListItem
                       key={match.matchId}
                       match={match}
-                      onClick={() => setMatchId(match.matchId)}
-                      isSelected={match.matchId === selectedMatchId}
+                      onClick={() => {
+                        // Route to game and then request
+                        history.push(gameRouteBase + 1);
+                      }}
                     />
                   );
                 });
             }}
           </AllMatchesQuery>
         </ul>
-        <div className={buttonWrapperCss.toString()}>
-          <Button
-            text={'Join Game'}
-            isDisabled={!selectedMatchId}
-            onClick={() => {
-              // Route to game and then request
-              selectedMatchId && history.push(gameRouteBase + selectedMatchId);
-            }}
-          />
-          <CreateGameButton />
-        </div>
       </div>
     );
   }),
@@ -67,5 +54,3 @@ interface IProps extends RouteComponentProps<{}> {}
 const listCss = css({ listStyle: 'none', padding: '1rem', width: '300px' });
 
 const wrapperCss = css({ flex: '1 1 auto' });
-
-const buttonWrapperCss = css({ flexDirection: 'column', flex: '1 1 auto' });

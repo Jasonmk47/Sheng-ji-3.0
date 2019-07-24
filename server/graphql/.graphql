@@ -8,6 +8,7 @@ type Match {
   matchName: String!
   isActive: Boolean!
   numPlayers: Int!
+  numDecks: Int!
   currentGame: Game
   allGames: [Game!]!
   matchInfos: [MatchInfo]!
@@ -67,7 +68,13 @@ type Query {
 
 # this schema allows the following mutation:
 type Mutation {
-  createMatch(userId: ID!): Match #One user creates a game and the others join
+  createMatch(
+    userId: ID!
+    numPlayers: Int!
+    numDecks: Int!
+    matchName: String!
+  ): Match! #One user creates a game and the others join
+  joinMatch(userId: ID!, matchId: Int): Match
   playCards(userId: ID!, cardIds: [Int!]!, gameId: Int!): Trick
   callSuit(userId: ID!, gameId: Int!, suitType: Int!): Game
   flipSuit(userId: ID!, gameId: Int!, suitType: Int!): Game

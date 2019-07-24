@@ -11,6 +11,7 @@ export interface Match {
   matchName: string;
   isActive: boolean;
   numPlayers: number;
+  numDecks: number;
   currentGame: Game;
   allGames: Game[];
   matchInfos: MatchInfo[];

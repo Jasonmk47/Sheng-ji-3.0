@@ -99,7 +99,6 @@ export const GET_ACTIVE_GAMES = gql`
     activeGames(userId: $userId) {
       gameId
       matchId
-      matchName
       isActive
       trumpSuit
       trumpNumber

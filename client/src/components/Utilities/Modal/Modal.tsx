@@ -20,13 +20,14 @@ export const Modal = React.memo(() => (
       }
 
       return (
-        <ModalMutation mutation={TOGGLE_MODAL_MUTATION}>
+        <ModalMutation
+          mutation={TOGGLE_MODAL_MUTATION}
+          variables={{ type: ModalType.createGame }}
+        >
           {toggleModal => (
             <ReactModal
               isOpen={data.modal.isOpen}
-              onRequestClose={() =>
-                toggleModal({ variables: { type: ModalType.createGame } })
-              }
+              onRequestClose={() => toggleModal()}
               shouldCloseOnOverlayClick={true}
               style={modalCss}
             >

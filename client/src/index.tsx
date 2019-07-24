@@ -8,7 +8,6 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 import { withClientState } from 'apollo-link-state';
 
 import initialState from './constants/initialState';
-import gameResolvers from './services/graphqlServices/gameResolvers';
 import localResolvers from './services/graphqlServices/localResolvers';
 import Root from './components/Root';
 import registerServiceWorker from './services/registerServiceWorker';
@@ -19,7 +18,7 @@ const cache = new InMemoryCache();
 
 const stateLink = withClientState({
   cache,
-  resolvers: { Mutation: { ...gameResolvers, ...localResolvers } },
+  resolvers: { Mutation: { ...localResolvers } },
   defaults: initialState,
 });
 

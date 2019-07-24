@@ -2,24 +2,36 @@ import * as React from 'react';
 import { css } from 'glamor';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
-import { GameMatchParams } from '../../../types/routeTypes';
-import { SupportedNumPlayers, SupportedNumDecks } from 'constants/enums';
 import { Button } from '../Buttons/Button';
+import { SupportedNumPlayers, SupportedNumDecks } from 'constants/enums';
 import { gameRouteBase } from 'constants/routes';
 import { fonts } from 'constants/fonts';
+import { CREATE_MATCH } from 'services/graphqlServices/mutations';
+import { CreateMatchMutation } from 'types/mutationTypes';
+import { GameMatchParams } from 'types/routeTypes';
 
 export const CreateGameModal = React.memo(
   withRouter(({ history, toggleModal }: IProps) => {
     const [numPlayers, setNumPlayers] = React.useState(SupportedNumPlayers[0]);
     const [numDecks, setNumDecks] = React.useState(SupportedNumDecks[0]);
+    const [matchName, setMatchName] = React.useState('');
+
     return (
       <div className={contentsCss.toString()}>
         <div className={modalSectionCss.toString()}>
+          <h3>Name</h3>
+          <input
+            type="text"
+            value={matchName}
+            onChange={e => setMatchName(e.currentTarget.value)}
+          ></input>
+        </div>
+        <div className={modalSectionCss.toString()}>
           <h3>Number of Players</h3>
           <div className={optionsListCss.toString()}>
-            {SupportedNumPlayers.map(p => (
+            {SupportedNumPlayers.sort().map(p => (
               <div
-                id={p.toString()}
+                key={p}
                 onClick={() => setNumPlayers(p)}
                 className={css(
                   optionCss,
@@ -34,9 +46,9 @@ export const CreateGameModal = React.memo(
         <div className={modalSectionCss.toString()}>
           <h3>Number of Decks</h3>
           <div className={optionsListCss.toString()}>
-            {SupportedNumDecks.map(d => (
+            {SupportedNumDecks.sort().map(d => (
               <div
-                id={d.toString()}
+                key={d}
                 onClick={() => setNumDecks(d)}
                 className={css(
                   optionCss,
@@ -48,14 +60,37 @@ export const CreateGameModal = React.memo(
             ))}
           </div>
         </div>
-
-        <Button
-          onClick={() => {
-            toggleModal();
-            history.push(gameRouteBase);
+        <CreateMatchMutation
+          mutation={CREATE_MATCH}
+          onError={e => {
+            console.error('Apollo error with creating match', e);
           }}
-          text={'Start'}
-        />
+          variables={{
+            //TODO change to real user
+            userId: '11111111-1111-1111-1111-111111111111',
+            numPlayers: numPlayers,
+            numDecks: numDecks,
+            matchName: matchName,
+          }}
+        >
+          {createMatch => (
+            <Button
+              onClick={async () => {
+                // Create game
+                const newMatch = await createMatch();
+                toggleModal();
+
+                // Route to it
+                // Known typescript issue with void
+                // https://github.com/apollographql/react-apollo/issues/2095
+                history.push(
+                  gameRouteBase + (newMatch as any).data.createMatch.matchId,
+                );
+              }}
+              text={'Start'}
+            />
+          )}
+        </CreateMatchMutation>
       </div>
     );
   }),
