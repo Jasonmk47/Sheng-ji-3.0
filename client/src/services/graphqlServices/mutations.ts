@@ -17,3 +17,11 @@ export const CREATE_MATCH = gql`
     }
   }
 `;
+
+export const CREATE_USER = gql`
+  mutation createUser($username: String!, $password: String!) {
+    createUser(username: $username, password: $password) {
+      userId
+    }
+  }
+`;

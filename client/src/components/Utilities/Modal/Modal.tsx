@@ -3,6 +3,7 @@ import * as ReactModal from 'react-modal';
 import { css } from 'glamor';
 
 import { CreateGameModal } from './CreateGameModal';
+import { LoginModal } from './LoginModal';
 import { GET_LOCAL_MODAL_STATE } from '../../../services/graphqlServices/localQueries';
 import { TOGGLE_MODAL_MUTATION } from '../../../services/graphqlServices/localMutations';
 import { ModalQuery } from '../../../types/localQueryTypes';
@@ -22,7 +23,7 @@ export const Modal = React.memo(() => (
       return (
         <ModalMutation
           mutation={TOGGLE_MODAL_MUTATION}
-          variables={{ type: ModalType.createGame }}
+          variables={{ type: ModalType.none }}
         >
           {toggleModal => (
             <ReactModal
@@ -57,7 +58,16 @@ export const Modal = React.memo(() => (
                   [ModalType.createGame]: (
                     <CreateGameModal
                       toggleModal={() =>
-                        toggleModal({ variables: { type: ModalType.none } })
+                        toggleModal({
+                          variables: { type: ModalType.createGame },
+                        })
+                      }
+                    />
+                  ),
+                  [ModalType.login]: (
+                    <LoginModal
+                      toggleModal={() =>
+                        toggleModal({ variables: { type: ModalType.login } })
                       }
                     />
                   ),

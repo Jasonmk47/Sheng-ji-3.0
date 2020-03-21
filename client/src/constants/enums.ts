@@ -17,6 +17,7 @@ export enum Suits {
 export enum ModalType {
   none = 0,
   createGame,
+  login,
 }
 
 // First value is default

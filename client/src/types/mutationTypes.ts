@@ -30,3 +30,17 @@ export class CreateMatchMutation extends Mutation<
   CreateMatchData,
   CreateMatchVariables
 > {}
+
+export interface CreateUserData {
+  userId: string;
+}
+
+interface CreateUserVariables {
+  username: string;
+  password: string;
+}
+
+export class CreateUserMutation extends Mutation<
+  CreateUserData,
+  CreateUserVariables
+> {}

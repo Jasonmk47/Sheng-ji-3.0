@@ -11,6 +11,7 @@ export const Homepage = () => (
     <AppHeader />
     <div className={contentWrapperCss.toString()}>
       <MatchList />
+
       <CreateGameButton />
     </div>
   </div>

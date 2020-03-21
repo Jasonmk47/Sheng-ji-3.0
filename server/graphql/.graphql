@@ -74,6 +74,7 @@ type Mutation {
     numDecks: Int!
     matchName: String!
   ): Match! #One user creates a game and the others join
+  createUser(username: String!, password: String!): String!
   joinMatch(userId: ID!, matchId: Int): Match
   playCards(userId: ID!, cardIds: [Int!]!, gameId: Int!): Trick
   callSuit(userId: ID!, gameId: Int!, suitType: Int!): Game

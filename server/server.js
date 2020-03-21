@@ -6,6 +6,7 @@ const path = require('path');
 const graphqlHTTP = require('express-graphql');
 const pgp = require('pg-promise')();
 const { buildSchema } = require('graphql');
+const cors = require('cors');
 
 const { typeDefs, resolver } = require('./graphql');
 
@@ -32,6 +33,13 @@ app.use(
     context: db,
   }),
 );
+
+// enable cors
+var corsOptions = {
+  origin: 'sheng-ji-3.herokuapp',
+  credentials: true, // <-- REQUIRED backend setting
+};
+app.use(cors(corsOptions));
 
 if (process.env.NODE_ENV === 'production') {
   // Serve any static files

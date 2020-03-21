@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import * as Modal from 'react-modal';
 import ApolloClient from 'apollo-client';
-import { HttpLink } from 'apollo-link-http';
+import { createHttpLink } from 'apollo-link-http';
 import { ApolloLink } from 'apollo-link';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { withClientState } from 'apollo-link-state';
@@ -22,9 +22,14 @@ const stateLink = withClientState({
   defaults: initialState,
 });
 
+const link = createHttpLink({
+  uri: '/graphql',
+  credentials: 'same-origin',
+});
+
 const apolloClient = new ApolloClient({
   cache: cache,
-  link: ApolloLink.from([stateLink, new HttpLink()]),
+  link: ApolloLink.from([stateLink, link]),
   connectToDevTools: process.env.NODE_ENV === 'development',
 });
 
