@@ -12,8 +12,6 @@ import localResolvers from './services/graphqlServices/localResolvers';
 import Root from './components/Root';
 import registerServiceWorker from './services/registerServiceWorker';
 
-import './styles/index.css';
-
 const cache = new InMemoryCache();
 
 const stateLink = withClientState({
