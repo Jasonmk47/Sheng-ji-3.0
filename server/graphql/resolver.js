@@ -10,7 +10,7 @@ const {
   getGameIdsForUserId,
 } = dbQueryHelper;
 
-const { createDbMatch } = dbMutationHelper;
+const { createDbMatch, createDbMatchInfos, createUser } = dbMutationHelper;
 
 const resolverMap = {
   //////////////////////////////////////////////////////////////////////////////////////
@@ -83,6 +83,14 @@ const resolverMap = {
     };
 
     return match;
+  },
+  createUser: async (args, context) => {
+    var { username, password } = args;
+    var userId = await createUser(username, password);
+
+    throw new Error('Already a user');
+
+    return userId;
   },
 };
 

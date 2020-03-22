@@ -49,4 +49,14 @@ const createDbMatch = async (
   return matchId;
 };
 
-module.exports = { createDbMatch };
+const createUser = async (username, password) => {
+  // Check if already a username registered
+  // Generate salt
+  // Generate userId
+  // Salt and hash password
+  //Insert new user
+  // Return new userId
+  return 'new Test User Id' + username + password;
+};
+
+module.exports = { createDbMatch, createDbMatchInfos, createUser };

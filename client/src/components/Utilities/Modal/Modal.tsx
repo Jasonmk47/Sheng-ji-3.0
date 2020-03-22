@@ -3,6 +3,7 @@ import * as ReactModal from 'react-modal';
 import { css } from 'glamor';
 
 import { CreateGameModal } from './CreateGameModal';
+import { CreateUserModal } from './CreateUserModal';
 import { LoginModal } from './LoginModal';
 import { GET_LOCAL_MODAL_STATE } from '../../../services/graphqlServices/localQueries';
 import { TOGGLE_MODAL_MUTATION } from '../../../services/graphqlServices/localMutations';
@@ -37,6 +38,8 @@ export const Modal = React.memo(() => (
                   {
                     [ModalType.none]: <span>Weird</span>,
                     [ModalType.createGame]: <span>Create Game</span>,
+                    [ModalType.login]: <span>Login</span>,
+                    [ModalType.createUser]: <span>Create User</span>,
                   }[data.modal.type]
                 }
               </h2>
@@ -57,7 +60,7 @@ export const Modal = React.memo(() => (
                   ),
                   [ModalType.createGame]: (
                     <CreateGameModal
-                      toggleModal={() =>
+                      toggleModalClose={() =>
                         toggleModal({
                           variables: { type: ModalType.createGame },
                         })
@@ -66,8 +69,27 @@ export const Modal = React.memo(() => (
                   ),
                   [ModalType.login]: (
                     <LoginModal
-                      toggleModal={() =>
+                      toggleModalClose={() =>
                         toggleModal({ variables: { type: ModalType.login } })
+                      }
+                      switchToCreate={() =>
+                        toggleModal({
+                          variables: { type: ModalType.createUser },
+                        })
+                      }
+                    />
+                  ),
+                  [ModalType.createUser]: (
+                    <CreateUserModal
+                      toggleModalClose={() =>
+                        toggleModal({
+                          variables: { type: ModalType.createUser },
+                        })
+                      }
+                      switchToLogin={() =>
+                        toggleModal({
+                          variables: { type: ModalType.login },
+                        })
                       }
                     />
                   ),

@@ -16,10 +16,14 @@ export default {
       'Cannot read modal state',
     );
 
+    const isDifferentModal =
+      variables.type !== modalState.modal.type &&
+      variables.type !== ModalType.none;
+
     const data = {
       modal: {
         ...modalState.modal,
-        isOpen: !modalState.modal.isOpen,
+        isOpen: isDifferentModal ? true : !modalState.modal.isOpen,
         type: variables.type,
       },
     };

@@ -4,9 +4,11 @@ import { css } from 'glamor';
 import { Button } from '../Buttons/Button';
 import {} from 'types/mutationTypes';
 import {} from 'types/routeTypes';
+import { CREATE_USER } from 'services/graphqlServices/mutations';
+import { CreateUserMutation } from 'types/mutationTypes';
 
-export const LoginModal = React.memo(
-  ({ toggleModalClose, switchToCreate }: IProps) => {
+export const CreateUserModal = React.memo(
+  ({ toggleModalClose, switchToLogin }: IProps) => {
     const [username, setUsername] = React.useState('');
     const [password, setPassword] = React.useState('');
 
@@ -16,13 +18,11 @@ export const LoginModal = React.memo(
           <div>
             <Button
               onClick={async () => {
-                switchToCreate();
+                switchToLogin();
               }}
-              text={'Create User'}
+              text={'Login'}
             />
           </div>
-        </div>
-        <div className={modalSectionCss.toString()}>
           <h3>Username</h3>
           <input
             type="text"
@@ -38,18 +38,35 @@ export const LoginModal = React.memo(
             onChange={e => setPassword(e.currentTarget.value)}
           ></input>
         </div>
-
-        <Button
-          isDisabled={username === '' || password === ''}
-          onClick={async () => {
-            // Login
-
-            toggleModalClose();
-
-            // Set login token
+        <CreateUserMutation
+          mutation={CREATE_USER}
+          onError={e => {
+            if (e.networkError?.message === 'Already a user') {
+              // Message of duplicate username
+              console.log('here');
+            }
+            console.error('Apollo error with creating user', e);
           }}
-          text={'Login'}
-        />
+          variables={{
+            username: username,
+            password: password,
+          }}
+        >
+          {createUser => (
+            <Button
+              isDisabled={username === '' || password === ''}
+              onClick={async () => {
+                // Create user
+                await createUser();
+                //const loginToken = await createUser();
+                toggleModalClose();
+
+                // Set login token
+              }}
+              text={'Start'}
+            />
+          )}
+        </CreateUserMutation>
       </div>
     );
   },
@@ -57,7 +74,7 @@ export const LoginModal = React.memo(
 
 interface IProps {
   toggleModalClose(): void;
-  switchToCreate(): void;
+  switchToLogin(): void;
 }
 
 const contentsCss = css({

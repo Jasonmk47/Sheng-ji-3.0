@@ -2,6 +2,7 @@ import * as React from 'react';
 import { css } from 'glamor';
 
 import { CreateGameButton } from './CreateGameButton';
+import { LoginButton } from './LoginButton';
 
 import { AppHeader } from './AppHeader';
 import { MatchList } from './MatchList';
@@ -13,6 +14,7 @@ export const Homepage = () => (
       <MatchList />
 
       <CreateGameButton />
+      <LoginButton />
     </div>
   </div>
 );

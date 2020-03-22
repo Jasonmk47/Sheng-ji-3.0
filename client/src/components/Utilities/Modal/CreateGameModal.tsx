@@ -11,7 +11,7 @@ import { CreateMatchMutation } from 'types/mutationTypes';
 import { GameMatchParams } from 'types/routeTypes';
 
 export const CreateGameModal = React.memo(
-  withRouter(({ history, toggleModal }: IProps) => {
+  withRouter(({ history, toggleModalClose }: IProps) => {
     const [numPlayers, setNumPlayers] = React.useState(SupportedNumPlayers[0]);
     const [numDecks, setNumDecks] = React.useState(SupportedNumDecks[0]);
     const [matchName, setMatchName] = React.useState('');
@@ -78,7 +78,7 @@ export const CreateGameModal = React.memo(
               onClick={async () => {
                 // Create game
                 const newMatch = await createMatch();
-                toggleModal();
+                toggleModalClose();
 
                 // Route to it
                 // Known typescript issue with void
@@ -97,7 +97,7 @@ export const CreateGameModal = React.memo(
 );
 
 interface IProps extends RouteComponentProps<GameMatchParams> {
-  toggleModal(): void;
+  toggleModalClose(): void;
 }
 
 const contentsCss = css({

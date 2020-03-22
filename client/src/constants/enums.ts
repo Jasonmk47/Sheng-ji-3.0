@@ -18,6 +18,7 @@ export enum ModalType {
   none = 0,
   createGame,
   login,
+  createUser,
 }
 
 // First value is default
