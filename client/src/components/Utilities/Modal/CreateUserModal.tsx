@@ -41,7 +41,8 @@ export const CreateUserModal = React.memo(
         <CreateUserMutation
           mutation={CREATE_USER}
           onError={e => {
-            if (e.networkError?.message === 'Already a user') {
+            debugger;
+            if (e.networkError.result.errors[0] === 'Already a user') {
               // Message of duplicate username
               console.log('here');
             }
