@@ -6,7 +6,7 @@ import {} from 'types/mutationTypes';
 import {} from 'types/routeTypes';
 
 export const LoginModal = React.memo(
-  ({ toggleModalClose, switchToCreate }: IProps) => {
+  ({ toggleCurrentModal: toggleModalClose, switchToCreate }: IProps) => {
     const [username, setUsername] = React.useState('');
     const [password, setPassword] = React.useState('');
 
@@ -22,41 +22,71 @@ export const LoginModal = React.memo(
             />
           </div>
         </div>
-        <div className={modalSectionCss.toString()}>
-          <h3>Username</h3>
-          <input
-            type="text"
-            value={username}
-            onChange={e => setUsername(e.currentTarget.value)}
-          ></input>
-        </div>
-        <div className={modalSectionCss.toString()}>
-          <h3>Password</h3>
-          <input
-            type="text"
-            value={password}
-            onChange={e => setPassword(e.currentTarget.value)}
-          ></input>
-        </div>
+        <form>
+          <div className={modalSectionCss.toString()}>
+            <h3>Username</h3>
+            <input
+              type="text"
+              value={username}
+              onChange={e => setUsername(e.currentTarget.value)}
+            ></input>
+          </div>
+          <div className={modalSectionCss.toString()}>
+            <h3>Password</h3>
+            <input
+              type="text"
+              value={password}
+              onChange={e => setPassword(e.currentTarget.value)}
+            ></input>
+          </div>
 
-        <Button
-          isDisabled={username === '' || password === ''}
-          onClick={async () => {
-            // Login
+          <Button
+            isDisabled={username === '' || password === ''}
+            onClick={async () => {
+              // Login
+              const options = {
+                method: 'post',
+                headers: {
+                  'Content-type':
+                    'application/x-www-form-urlencoded; charset=UTF-8',
+                },
+                body: `username=${username}&password=${password}`,
+              };
 
-            toggleModalClose();
+              const url = 'http://localhost:3000/login';
 
-            // Set login token
-          }}
-          text={'Login'}
-        />
+              fetch(url, options)
+                .then(response => {
+                  if (!response.ok) {
+                    if (response.status === 404) {
+                      alert('Username not found, please retry');
+                      toggleModalClose();
+                    }
+                    if (response.status === 401) {
+                      alert('Username and password do not match, please retry');
+                      toggleModalClose();
+                    }
+                  }
+                  return response;
+                })
+                .then(response => response.json())
+                .then(data => {
+                  if (data.success) {
+                    document.cookie = 'token=' + data.token;
+                  }
+                });
+              toggleModalClose();
+            }}
+            text={'Login'}
+          />
+        </form>
       </div>
     );
   },
 );
 
 interface IProps {
-  toggleModalClose(): void;
+  toggleCurrentModal(): void;
   switchToCreate(): void;
 }
 

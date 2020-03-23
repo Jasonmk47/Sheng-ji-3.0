@@ -51,7 +51,6 @@ const createDbMatch = async (
 
 const createUser = async (username, password) => {
   // Check if already a username registered
-  // Generate salt
   // Generate userId
   // Salt and hash password
   //Insert new user

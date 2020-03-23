@@ -4,6 +4,7 @@ const getUser = async (userId, context) => {
       `SELECT
             u.userId
             , u.username
+            , u.passwordHash
           FROM account.users u
           WHERE u.userId = '${userId}';`,
     )
@@ -14,9 +15,33 @@ const getUser = async (userId, context) => {
       return {
         userId: data.userid,
         username: data.username,
+        passwordHash: data.passwordHash,
       };
     })
     .catch(err => console.error(`Failed to read user ${userId}`, err));
+};
+
+const getUserFromUsername = async (username, context) => {
+  return await context
+    .one(
+      `SELECT
+            u.userId
+            , u.username
+            , u.passwordHash
+          FROM account.users u
+          WHERE u.username = '${username}';`,
+    )
+    .then(data => {
+      if (data === undefined || data === null) {
+        throw new Error('No data returned for username query');
+      }
+      return {
+        userId: data.userid,
+        username: data.username,
+        passwordHash: data.passwordhash,
+      };
+    })
+    .catch(err => console.error(`Failed to read user ${username}`, err));
 };
 
 const getGame = async (gameId, userId, context) => {
@@ -209,6 +234,7 @@ const getGameIdsForUserId = async (userId, context) => {
 
 module.exports = {
   getUser,
+  getUserFromUsername,
   getGame,
   getMatch,
   getTrick,

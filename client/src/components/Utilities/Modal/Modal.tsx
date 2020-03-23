@@ -69,7 +69,7 @@ export const Modal = React.memo(() => (
                   ),
                   [ModalType.login]: (
                     <LoginModal
-                      toggleModalClose={() =>
+                      toggleCurrentModal={() =>
                         toggleModal({ variables: { type: ModalType.login } })
                       }
                       switchToCreate={() =>
@@ -81,7 +81,7 @@ export const Modal = React.memo(() => (
                   ),
                   [ModalType.createUser]: (
                     <CreateUserModal
-                      toggleModalClose={() =>
+                      toggleCurrentModal={() =>
                         toggleModal({
                           variables: { type: ModalType.createUser },
                         })

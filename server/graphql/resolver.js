@@ -17,7 +17,8 @@ const resolverMap = {
   // Queries ///////////////////////////////////////////////////////////////////////////
   //////////////////////////////////////////////////////////////////////////////////////
   user: async (args, context) => {
-    return await getUser(args.userId, context);
+    var user = await getUser(args.userId, context);
+    return { userId: user.userId, username: user.username };
   },
   game: async (args, context) => {
     return await getGame(args.gameId, args.userId, context);

@@ -1,11 +1,13 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import * as Modal from 'react-modal';
+import * as Cookies from 'js-cookie';
 import ApolloClient from 'apollo-client';
 import { createHttpLink } from 'apollo-link-http';
 import { ApolloLink } from 'apollo-link';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { withClientState } from 'apollo-link-state';
+import { setContext } from 'apollo-link-context';
 
 import initialState from './constants/initialState';
 import localResolvers from './services/graphqlServices/localResolvers';
@@ -25,9 +27,20 @@ const link = createHttpLink({
   credentials: 'same-origin',
 });
 
+const authLink = setContext((_, { headers }) => {
+  const token = Cookies.get('token');
+
+  return {
+    headers: {
+      ...headers,
+      authorization: `Bearer ${token}`,
+    },
+  };
+});
+
 const apolloClient = new ApolloClient({
   cache: cache,
-  link: ApolloLink.from([stateLink, link]),
+  link: ApolloLink.from([stateLink, link, authLink]),
   connectToDevTools: process.env.NODE_ENV === 'development',
 });
 

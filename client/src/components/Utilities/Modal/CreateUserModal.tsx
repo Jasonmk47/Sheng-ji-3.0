@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { css } from 'glamor';
+import * as Cookies from 'js-cookie';
 
 import { Button } from '../Buttons/Button';
 import {} from 'types/mutationTypes';
@@ -8,7 +9,7 @@ import { CREATE_USER } from 'services/graphqlServices/mutations';
 import { CreateUserMutation } from 'types/mutationTypes';
 
 export const CreateUserModal = React.memo(
-  ({ toggleModalClose, switchToLogin }: IProps) => {
+  ({ toggleCurrentModal, switchToLogin }: IProps) => {
     const [username, setUsername] = React.useState('');
     const [password, setPassword] = React.useState('');
 
@@ -40,17 +41,24 @@ export const CreateUserModal = React.memo(
         </div>
         <CreateUserMutation
           mutation={CREATE_USER}
-          onError={e => {
-            debugger;
-            if (e.networkError.result.errors[0] === 'Already a user') {
+          // for some reason the mutation type doesn't know about networkError.result
+          onError={(e: any) => {
+            if (e.networkError.result.errors[0].message === 'Already a user') {
               // Message of duplicate username
-              console.log('here');
+              alert('Username taken');
+              toggleCurrentModal();
             }
             console.error('Apollo error with creating user', e);
           }}
           variables={{
             username: username,
             password: password,
+          }}
+          onCompleted={data => {
+            // todo add userId mutation to local state
+            var test = Cookies.get('token');
+            console.log(test);
+            document.cookie = 'token=' + data.userId;
           }}
         >
           {createUser => (
@@ -60,7 +68,7 @@ export const CreateUserModal = React.memo(
                 // Create user
                 await createUser();
                 //const loginToken = await createUser();
-                toggleModalClose();
+                toggleCurrentModal();
 
                 // Set login token
               }}
@@ -74,7 +82,7 @@ export const CreateUserModal = React.memo(
 );
 
 interface IProps {
-  toggleModalClose(): void;
+  toggleCurrentModal(): void;
   switchToLogin(): void;
 }
 

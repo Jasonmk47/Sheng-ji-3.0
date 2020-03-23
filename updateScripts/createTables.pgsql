@@ -16,7 +16,6 @@ CREATE SCHEMA IF NOT EXISTS account;
 CREATE TABLE IF NOT EXISTS account.users (
     userId UUID NOT NULL,
     username VARCHAR(64) NOT NULL,
-    salt CHAR(8) NOT NULL, 
     passwordHash CHAR(64) NOT NULL, --Can change char size given hash function
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
