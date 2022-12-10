@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "dotenv": "^6.2.0",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "express-graphql": "^0.6.12",
     "glamor": "^2.20.40",
     "graphql": "^0.13.2",
